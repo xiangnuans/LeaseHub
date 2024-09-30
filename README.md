@@ -1,5 +1,4 @@
 # LeaseHub
----
 
 Welcome to LeaseHub! Our platform revolutionizes real estate management by allowing property owners to tokenize their assets, providing a flexible way to manage ownership and generate income.
 
