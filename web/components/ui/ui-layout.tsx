@@ -25,9 +25,9 @@ export function UiLayout({
   const pathname = usePathname();
 
   return (
-    <div className="h-full flex flex-col bg-[#000000] px-[186px]">
+    <div className="h-full flex flex-col bg-[#000000]">
       {/* 顶部导航栏 */}
-      <div className="navbar text-neutral-content flex items-center justify-between">
+      <div className="container mx-auto py-4 flex items-center justify-between">
         {/* 左侧：Logo */}
         <Link className="btn btn-ghost normal-case text-xl" href="/">
           <img className="h-[50px]" alt="Logo" src="/logo.png" />
@@ -35,37 +35,34 @@ export function UiLayout({
 
         {/* 中间：导航菜单 */}
         <ul className="justify-start items-center gap-16 inline-flex">
-          {links.map(({ label, path }) => {
-            console.log('path = ', path, pathname);
-            return (
-              <li key={path}>
-                <Link
-                  className={`${
-                    pathname === path ? 'text-[#c5f250]' : 'text-[#b8b8b8]'
-                  } text-[17px] font-semibold font-['Poppins']`}
-                  href={path}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
+          {links.map(({ label, path }) => (
+            <li key={path}>
+              <Link
+                className={`${
+                  pathname === path ? 'text-[#c5f250]' : 'text-[#b8b8b8]'
+                } text-[17px] font-semibold font-['Poppins']`}
+                href={path}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* 右侧：钱包按钮 */}
         <div className="flex-none space-x-2">
-          {/* <ClusterUiSelect /> */}
           <WalletButton />
         </div>
       </div>
 
-      {/* 检查集群和账户 */}
-      <ClusterChecker>
-        <AccountChecker />
-      </ClusterChecker>
+      {/* 主体内容区域 */}
+      <div className="flex-grow container mx-auto">
+        {/* 检查集群和账户 */}
+        <ClusterChecker>
+          <AccountChecker />
+        </ClusterChecker>
 
-      {/* 主体内容 */}
-      <div className="flex-grow lg:mx-auto">
+        {/* 主体内容渲染 */}
         <Suspense
           fallback={
             <div className="text-center my-32">
@@ -75,8 +72,10 @@ export function UiLayout({
         >
           {children}
         </Suspense>
-        <Toaster position="bottom-right" />
       </div>
+
+      {/* Toast 通知 */}
+      <Toaster position="bottom-right" />
     </div>
   );
 }
