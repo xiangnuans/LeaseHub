@@ -8,7 +8,9 @@ body {
 }
 
 .wallet-adapter-button-trigger {
-  background: rgb(100, 26, 230) !important;
+  background: #222222 !important;
+  border-color: #C5F250 !important;
+  border-width: 1px !important;
   border-radius: 8px !important;
   padding-left: 16px !important;
   padding-right: 16px !important;
