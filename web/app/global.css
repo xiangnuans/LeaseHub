@@ -8,14 +8,18 @@ body {
 }
 
 .wallet-adapter-button-trigger {
-  background: #222222 !important;
-  border-color: #C5F250 !important;
+  background-color: #000000 !important;
   border-width: 1px !important;
   border-radius: 8px !important;
   padding-left: 16px !important;
   padding-right: 16px !important;
+
 }
-.wallet-adapter-dropdown-list,
+.wallet-adapter-dropdown-list {
+    font-family: inherit !important;
+}
 .wallet-adapter-button {
   font-family: inherit !important;
+  color: #c5f250 !important;
+  border: 1px solid #C5F250 !important;
 }

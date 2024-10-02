@@ -10,9 +10,11 @@ export const metadata = {
 };
 
 const links: { label: string; path: string }[] = [
-  { label: 'Account', path: '/account' },
-  { label: 'Clusters', path: '/clusters' },
-  { label: 'LeaseHub', path: '/lease-hub-solana-dapp' },
+  { label: 'Home', path: '/home' },
+  { label: 'Stake', path: '/stake' },
+  { label: 'Rent', path: '/rent' },
+  { label: 'Mini House', path: '/mini-house' },
+  { label: 'Investment', path: '/investment' },
 ];
 
 export default function RootLayout({
