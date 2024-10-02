@@ -5,108 +5,91 @@
  * IDL can be found at `target/idl/lease_hub_solana_dapp.json`.
  */
 export type LeaseHubSolanaDapp = {
-  address: '4P76KAJyhNTBvV1iTFv9hAnJ8vmcUHWQaBDoDLAGLYjX';
-  metadata: {
-    name: 'leaseHubSolanaDapp';
-    version: '0.1.0';
-    spec: '0.1.0';
-    description: 'Created with Anchor';
-  };
-  instructions: [
+  "address": "4P76KAJyhNTBvV1iTFv9hAnJ8vmcUHWQaBDoDLAGLYjX",
+  "metadata": {
+    "name": "leaseHubSolanaDapp",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
     {
-      name: 'close';
-      discriminator: [98, 165, 201, 177, 108, 65, 206, 96];
-      accounts: [
+      "name": "createStakePool",
+      "discriminator": [
+        198,
+        175,
+        88,
+        63,
+        128,
+        43,
+        8,
+        214
+      ],
+      "accounts": [
         {
-          name: 'payer';
-          writable: true;
-          signer: true;
+          "name": "stakePool",
+          "writable": true,
+          "signer": true
         },
         {
-          name: 'leaseHubSolanaDapp';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'decrement';
-      discriminator: [106, 227, 168, 59, 248, 27, 150, 101];
-      accounts: [
-        {
-          name: 'leaseHubSolanaDapp';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'increment';
-      discriminator: [11, 18, 104, 9, 104, 174, 59, 33];
-      accounts: [
-        {
-          name: 'leaseHubSolanaDapp';
-          writable: true;
-        }
-      ];
-      args: [];
-    },
-    {
-      name: 'initialize';
-      discriminator: [175, 175, 109, 31, 13, 152, 155, 237];
-      accounts: [
-        {
-          name: 'payer';
-          writable: true;
-          signer: true;
+          "name": "authority",
+          "writable": true,
+          "signer": true
         },
         {
-          name: 'leaseHubSolanaDapp';
-          writable: true;
-          signer: true;
-        },
-        {
-          name: 'systemProgram';
-          address: '11111111111111111111111111111111';
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
-      ];
-      args: [];
-    },
-    {
-      name: 'set';
-      discriminator: [198, 51, 53, 241, 116, 29, 126, 194];
-      accounts: [
-        {
-          name: 'leaseHubSolanaDapp';
-          writable: true;
-        }
-      ];
-      args: [
-        {
-          name: 'value';
-          type: 'u8';
-        }
-      ];
+      ],
+      "args": []
     }
-  ];
-  accounts: [
+  ],
+  "accounts": [
     {
-      name: 'leaseHubSolanaDapp';
-      discriminator: [135, 64, 223, 168, 233, 143, 162, 215];
+      "name": "stakePool",
+      "discriminator": [
+        121,
+        34,
+        206,
+        21,
+        79,
+        127,
+        255,
+        28
+      ]
     }
-  ];
-  types: [
+  ],
+  "errors": [
     {
-      name: 'leaseHubSolanaDapp';
-      type: {
-        kind: 'struct';
-        fields: [
+      "code": 6000,
+      "name": "invalidInputUpdateParam",
+      "msg": "Invalid input update parameter"
+    }
+  ],
+  "types": [
+    {
+      "name": "stakePool",
+      "type": {
+        "kind": "struct",
+        "fields": [
           {
-            name: 'count';
-            type: 'u8';
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "totalStaked",
+            "type": "u64"
+          },
+          {
+            "name": "stakerCount",
+            "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
           }
-        ];
-      };
+        ]
+      }
     }
-  ];
+  ]
 };

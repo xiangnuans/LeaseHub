@@ -8,54 +8,25 @@
   },
   "instructions": [
     {
-      "name": "close",
-      "discriminator": [98, 165, 201, 177, 108, 65, 206, 96],
+      "name": "create_stake_pool",
+      "discriminator": [
+        198,
+        175,
+        88,
+        63,
+        128,
+        43,
+        8,
+        214
+      ],
       "accounts": [
         {
-          "name": "payer",
+          "name": "stake_pool",
           "writable": true,
           "signer": true
         },
         {
-          "name": "lease_hub_solana_dapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "decrement",
-      "discriminator": [106, 227, 168, 59, 248, 27, 150, 101],
-      "accounts": [
-        {
-          "name": "lease_hub_solana_dapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "increment",
-      "discriminator": [11, 18, 104, 9, 104, 174, 59, 33],
-      "accounts": [
-        {
-          "name": "lease_hub_solana_dapp",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "initialize",
-      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "lease_hub_solana_dapp",
+          "name": "authority",
           "writable": true,
           "signer": true
         },
@@ -65,39 +36,51 @@
         }
       ],
       "args": []
-    },
-    {
-      "name": "set",
-      "discriminator": [198, 51, 53, 241, 116, 29, 126, 194],
-      "accounts": [
-        {
-          "name": "lease_hub_solana_dapp",
-          "writable": true
-        }
-      ],
-      "args": [
-        {
-          "name": "value",
-          "type": "u8"
-        }
-      ]
     }
   ],
   "accounts": [
     {
-      "name": "LeaseHubSolanaDapp",
-      "discriminator": [135, 64, 223, 168, 233, 143, 162, 215]
+      "name": "StakePool",
+      "discriminator": [
+        121,
+        34,
+        206,
+        21,
+        79,
+        127,
+        255,
+        28
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidInputUpdateParam",
+      "msg": "Invalid input update parameter"
     }
   ],
   "types": [
     {
-      "name": "LeaseHubSolanaDapp",
+      "name": "StakePool",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "count",
-            "type": "u8"
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_staked",
+            "type": "u64"
+          },
+          {
+            "name": "staker_count",
+            "type": "u64"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
           }
         ]
       }
