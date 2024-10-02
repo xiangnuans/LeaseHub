@@ -7,7 +7,7 @@ import { ReactNode, Suspense, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AccountChecker } from '../account/account-ui';
+import { AccountChecker } from '../stake/ui';
 import {
   ClusterChecker,
   // ClusterUiSelect,
@@ -27,7 +27,7 @@ export function UiLayout({
   return (
     <div className="h-full flex flex-col bg-[#000000] px-[186px]">
       {/* 顶部导航栏 */}
-      <div className="navbar text-neutral-content flex items-center justify-between p-4">
+      <div className="navbar text-neutral-content flex items-center justify-between">
         {/* 左侧：Logo */}
         <Link className="btn btn-ghost normal-case text-xl" href="/">
           <img className="h-[50px]" alt="Logo" src="/logo.png" />
@@ -65,7 +65,7 @@ export function UiLayout({
       </ClusterChecker>
 
       {/* 主体内容 */}
-      <div className="flex-grow mx-4 lg:mx-auto">
+      <div className="flex-grow lg:mx-auto">
         <Suspense
           fallback={
             <div className="text-center my-32">

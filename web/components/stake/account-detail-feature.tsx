@@ -12,7 +12,7 @@ import {
   AccountButtons,
   AccountTokens,
   AccountTransactions,
-} from './account-ui';
+} from './ui';
 
 export default function AccountDetailFeature() {
   const params = useParams();

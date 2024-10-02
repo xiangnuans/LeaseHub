@@ -17,6 +17,11 @@ body {
 }
 .wallet-adapter-dropdown-list {
     font-family: inherit !important;
+   
+}
+.wallet-adapter-modal-list .wallet-adapter-button {
+  color: #FFFFFF !important;
+  border: none !important;
 }
 .wallet-adapter-button {
   font-family: inherit !important;

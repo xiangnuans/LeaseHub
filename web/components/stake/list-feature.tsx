@@ -6,11 +6,11 @@ import { WalletButton } from '../solana/solana-provider';
 import { redirect } from 'next/navigation';
 
 export default function AccountListFeature() {
-  const { publicKey } = useWallet();
+  // const { publicKey } = useWallet();
 
-  if (publicKey) {
-    return redirect(`/account/${publicKey.toString()}`);
-  }
+  // if (publicKey) {
+  //   return redirect(`/account/${publicKey.toString()}`);
+  // }
 
   return (
     <div className="hero py-[64px]">
