@@ -34,21 +34,22 @@ export function UiLayout({
         </Link>
 
         {/* 中间：导航菜单 */}
-        <ul className="menu menu-horizontal px-1 space-x-2 justify-center items-center">
-          {links.map(({ label, path }) => (
-            <li key={path}>
-              <Link
-                className={`${
-                  pathname.startsWith(path)
-                    ? 'text-[#c5f250]'
-                    : 'text-[#b8b8b8]'
-                } text-[17px] font-semibold font-['Poppins']`}
-                href={path}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
+        <ul className="justify-start items-center gap-16 inline-flex">
+          {links.map(({ label, path }) => {
+            console.log('path = ', path, pathname);
+            return (
+              <li key={path}>
+                <Link
+                  className={`${
+                    pathname === path ? 'text-[#c5f250]' : 'text-[#b8b8b8]'
+                  } text-[17px] font-semibold font-['Poppins']`}
+                  href={path}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         {/* 右侧：钱包按钮 */}
