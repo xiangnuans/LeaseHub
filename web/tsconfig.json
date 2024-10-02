@@ -25,7 +25,8 @@
     "../web/.next/types/**/*.ts",
     "../dist/web/.next/types/**/*.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "components/index.txs"
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

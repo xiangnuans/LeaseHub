@@ -14,6 +14,7 @@ import {
   ExplorerLink,
 } from '../cluster/cluster-ui';
 import toast, { Toaster } from 'react-hot-toast';
+import Image from 'next/image';
 
 export function UiLayout({
   children,
@@ -25,44 +26,45 @@ export function UiLayout({
   const pathname = usePathname();
 
   return (
-    <div className="h-full flex flex-col bg-[#000000]">
-      {/* 顶部导航栏 */}
-      <div className="container mx-auto py-4 flex items-center justify-between">
-        {/* 左侧：Logo */}
-        <Link className="btn btn-ghost normal-case text-xl" href="/">
-          <img className="h-[50px]" alt="Logo" src="/logo.png" />
-        </Link>
-
-        {/* 中间：导航菜单 */}
-        <ul className="justify-start items-center gap-16 inline-flex">
-          {links.map(({ label, path }) => (
-            <li key={path}>
-              <Link
-                className={`${
-                  pathname === path ? 'text-[#c5f250]' : 'text-[#b8b8b8]'
-                } text-[17px] font-semibold font-['Poppins']`}
-                href={path}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* 右侧：钱包按钮 */}
-        <div className="flex-none space-x-2">
+    <div className="sm:gap-[49px] md:gap-[73px] lg:gap-[98px] py-[32px]  gap-[98px] flex w-full flex-col items-center bg-black-900_02  md:py-5 sm:py-4 mx-auto">
+      <div className="w-[76%] lg:px-5 md:px-5">
+        <header className="flex justify-between items-center gap-5 sm:flex-col">
+          <Link className="flex items-center gap-1" href="/">
+            <Image
+              className="h-[50px]"
+              width={186}
+              height={50}
+              alt="Logo"
+              src="/logo.png"
+            />
+          </Link>
+          <ul className="flex flex-wrap gap-10">
+            {links.map(({ label, path }) => (
+              <li key={path}>
+                <Link
+                  className={`${
+                    pathname === path ? 'text-[#c5f250]' : 'text-[#b8b8b8]'
+                  } text-[17px] font-semibold font-['Poppins']`}
+                  href={path}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <WalletButton />
-        </div>
+        </header>
       </div>
 
-      {/* 主体内容区域 */}
-      <div className="flex-grow container mx-auto">
-        {/* 检查集群和账户 */}
+      <div className="mb-1 flex w-[76%] flex-col items-center gap-20 lg:w-full lg:gap-20 lg:px-5 md:w-full md:gap-[60px] md:px-5 sm:gap-10">
+        {children}
+      </div>
+
+      {/* <div className="flex-grow container mx-auto">
         <ClusterChecker>
           <AccountChecker />
         </ClusterChecker>
 
-        {/* 主体内容渲染 */}
         <Suspense
           fallback={
             <div className="text-center my-32">
@@ -72,10 +74,10 @@ export function UiLayout({
         >
           {children}
         </Suspense>
-      </div>
+      </div> */}
 
       {/* Toast 通知 */}
-      <Toaster position="bottom-right" />
+      {/* <Toaster position="bottom-right" /> */}
     </div>
   );
 }
