@@ -41,8 +41,8 @@ export default function View() {
       <div className="self-stretch">
         <div className="flex items-start md:flex-col">
           <div className="flex-1 md:self-stretch">
-            <div className="flex flex-col items-center">
-              <div className="flex items-start justify-center self-stretch md:flex-col">
+            <div className="flex flex-col">
+              <div className="flex items-start self-stretch md:flex-col">
                 <Heading
                   size="headinglg"
                   as="h1"
@@ -103,11 +103,11 @@ export default function View() {
           />
         </div>
       </div>
-      <div className=" container-xs flex gap-7 md:flex-col">
+      <div className="container-xs flex gap-7 md:flex-col">
         {data.map((d, index) => (
           <div
             key={index}
-            className={`flex flex-col items-center justify-center w-[24%] md:w-full gap-7 sm:p-4 bg-gray-900_02 rounded-[20px]`}
+            className={`flex flex-col items-center justify-center w-[24%] md:w-full gap-7 p-[38px] sm:p-4 bg-gray-900_02 rounded-[20px]`}
           >
             <div className="flex rounded-md bg-lime-400_23 p-3">
               <Img

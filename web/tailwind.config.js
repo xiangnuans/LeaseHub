@@ -33,9 +33,9 @@ module.exports = {
         },
         blue_gray: {
           100: "var(--blue_gray_100)",
-          100_01: "var(--blue_gray_100_01)",
-          900_23: "var(--blue_gray_900_23)",
-          900_33: "var(--blue_gray_900_33)",
+          "100_01": "var(--blue_gray_100_01)",
+          "900_23": "var(--blue_gray_900_23)",
+          "900_33": "var(--blue_gray_900_33)",
         },
         gray: {
           50: "var(--gray_50)",
@@ -43,12 +43,12 @@ module.exports = {
           300: "var(--gray_300)",
           400: "var(--gray_400)",
           900: "var(--gray_900)",
-          200_99: "var(--gray_200_99)",
-          900_01: "var(--gray_900_01)",
-          900_02: "var(--gray_900_02)",
-          900_99: "var(--gray_900_99)",
-          900_99_01: "var(--gray_900_99_01)",
-          900_99_02: "var(--gray_900_99_02)",
+          "200_99": "var(--gray_200_99)",
+          "900_01": "var(--gray_900_01)",
+          "900_02": "var(--gray_900_02)",
+          "900_99": "var(--gray_900_99)",
+          "900_99_01": "var(--gray_900_99_01)",
+          "900_99_02": "var(--gray_900_99_02)",
         },
         green: { 900: "var(--green_900)", },
         light_blue: {
@@ -58,7 +58,7 @@ module.exports = {
         },
         lime: {
           400: "var(--lime_400)",
-          400_23: "var(--lime_400_23)"
+          "400_23": "var(--lime_400_23)"
         },
         white: {
           a700: "var(--white_a700)",

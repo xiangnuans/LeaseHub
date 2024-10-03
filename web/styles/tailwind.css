@@ -2,32 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
-}
 
-.wallet-adapter-button-trigger {
-  background-color: #000000 !important;
-  border-width: 1px !important;
-  border-radius: 8px !important;
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-
-}
-.wallet-adapter-dropdown-list {
-    font-family: inherit !important;
-   
-}
-.wallet-adapter-modal-list .wallet-adapter-button {
-  color: #FFFFFF !important;
-  border: none !important;
-}
-.wallet-adapter-button {
-  font-family: inherit !important;
-  color: #c5f250 !important;
-  border: 1px solid #C5F250 !important;
-}
 
 @layer base {
   :root {
@@ -102,6 +77,6 @@ body {
 
 @layer components {
   .container-xs {
-    @apply w-full mx-auto max-w-[1448px]
+    @apply w-full mx-auto
   }
 }

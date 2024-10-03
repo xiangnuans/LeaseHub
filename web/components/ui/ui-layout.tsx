@@ -26,7 +26,7 @@ export function UiLayout({
   const pathname = usePathname();
 
   return (
-    <div className="sm:gap-[49px] md:gap-[73px] lg:gap-[98px] py-[32px]  gap-[98px] flex w-full flex-col items-center bg-black-900_02  md:py-5 sm:py-4 mx-auto">
+    <div className="min-h-screen flex w-full flex-col items-center gap-[98px] bg-black-900_02 py-[52px] lg:gap-[98px] xl:gap-[160px] md:gap-[73px]  md:py-5 sm:gap-[49px] sm:py-4 mx-auto">
       <div className="w-[76%] lg:px-5 md:px-5">
         <header className="flex justify-between items-center gap-5 sm:flex-col">
           <Link className="flex items-center gap-1" href="/">
