@@ -74,9 +74,9 @@ export default function View() {
                 </span>
               </Heading>
             </div>
-            <div className=" relative mr-5 mt-[-62px] flex flex-col items-start md:mr-0">
+            <div className="relative mr-5  flex flex-col items-start md:mr-0">
               <Text
-                className=" w-full font-rubik text-[16px] font-normal leading-[31px] text-gray-400 lg:text-[13px]"
+                className="w-full font-rubik text-[16px] font-normal leading-[31px] text-gray-400 lg:text-[13px] mb-8"
                 as="p"
               >
                 Robinland provides fixed passive income to retail investors by
