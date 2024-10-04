@@ -1,5 +1,5 @@
-import RentPage from '@/components/rent/ui';
+import RentPage from "@/components/rent/ui";
 
 export default function Page() {
-  return <div>rect</div>;
+  return <RentPage />;
 }
