@@ -2,12 +2,7 @@
   "recommendations": [
     "nrwl.angular-console",
     "esbenp.prettier-vscode",
-    "firsttris.vscode-jest-runner"
-  ],
-  "tailwindCSS.includeLanguages": {
-    "javascript": "javascript",
-    "javascriptreact": "javascriptreact",
-    "typescript": "typescript",
-    "typescriptreact": "typescriptreact"
-  }
+    "firsttris.vscode-jest-runner",
+    "bradlc.vscode-tailwindcss"
+  ]
 }

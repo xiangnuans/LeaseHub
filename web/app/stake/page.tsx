@@ -1,5 +1,5 @@
-import ClusterFeature from '@/components/cluster/cluster-feature';
+import StakePage from '@/components/stake/ui';
 
 export default function Page() {
-  return <ClusterFeature />;
+  return <StakePage />;
 }

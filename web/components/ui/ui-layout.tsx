@@ -7,7 +7,7 @@ import { ReactNode, Suspense, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { AccountChecker } from '../stake/ui';
+// import { AccountChecker } from '../stake/ui';
 import {
   ClusterChecker,
   // ClusterUiSelect,
