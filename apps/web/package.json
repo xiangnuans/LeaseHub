@@ -22,7 +22,9 @@
 		"react-dom": "18.3.1",
 		"@solana/wallet-adapter-react-ui": "^0.9.35",
 		"@tailwindcss/forms": "^0.5.9",
-		"react-accessible-accordion": "^5.0.0"
+		"react-accessible-accordion": "^5.0.0",
+		"@nextui-org/date-picker": "^2.1.8",
+		"@nextui-org/input": "^2.2.5"
 	},
 	"devDependencies": {
 		"@repo/wallet-provider": "workspace:*",

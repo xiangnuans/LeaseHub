@@ -1,12 +1,12 @@
 "use client";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import * as React from "react";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { siteConfig, SiteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { WalletButton } from "@repo/wallet-provider";
 
 export default function UiLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -38,10 +38,9 @@ export default function UiLayout({ children }: { children: ReactNode }) {
               </li>
             ))}
           </ul>
-          <WalletMultiButton />
+          <WalletButton />
         </header>
       </div>
-
       <div className="mb-1 flex w-[76%] flex-col items-center gap-20 lg:w-full lg:gap-20 lg:px-5 md:w-full md:gap-[60px] md:px-5 sm:gap-10">
         {children}
       </div>

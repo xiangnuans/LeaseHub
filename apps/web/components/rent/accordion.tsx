@@ -5,22 +5,22 @@ import {
   AccordionItemHeading,
   AccordionItemButton,
   AccordionItemState,
-} from 'react-accessible-accordion';
-import { Heading } from '../heading';
-import { Img } from '../Img';
-import DownIcon from '@/assets/icons/rent-down-arrow.svg';
-import WifiIcon from '@/assets/icons/rent/wifi.svg';
-import GroceriedIcon from '@/assets/icons/rent/groceries.svg';
-import RestaurantIcon from '@/assets/icons/rent/restaurant.svg';
-import LoungeIcon from '@/assets/icons/rent/lounge.svg';
-import WashingIcon from '@/assets/icons/rent/washing.svg';
-import BathubIcon from '@/assets/icons/rent/bathub.svg';
-import ParkingIcon from '@/assets/icons/rent/parking.svg';
-import ACIcon from '@/assets/icons/rent/ac.svg';
+} from "react-accessible-accordion";
+import { Heading } from "../heading";
+import { Img } from "../Img";
+import DownIcon from "@/assets/icons/rent-down-arrow.svg";
+import WifiIcon from "@/assets/icons/rent/wifi.svg";
+import GroceriedIcon from "@/assets/icons/rent/groceries.svg";
+import RestaurantIcon from "@/assets/icons/rent/restaurant.svg";
+import LoungeIcon from "@/assets/icons/rent/lounge.svg";
+import WashingIcon from "@/assets/icons/rent/washing.svg";
+import BathubIcon from "@/assets/icons/rent/bathub.svg";
+import ParkingIcon from "@/assets/icons/rent/parking.svg";
+import ACIcon from "@/assets/icons/rent/ac.svg";
 
 const accordionData = [
   {
-    label: 'Equeipment requirement',
+    label: "Equeipment requirement",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function AccordionComponent() {
                         <div className="flex flex-1 items-start justify-between gap-5 self-center">
                           <Heading
                             size="headingmd"
-                            as={'h6'}
+                            as={"h6"}
                             className="self-cneter text-[17.76px] font-semibold text-white-a700 lg:text-[14px]"
                           >
                             {d.label}

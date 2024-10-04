@@ -1,9 +1,9 @@
-'use client';
-import React from 'react';
-import { Img, Button, Heading } from '@/components/';
-import AccordionComponent from './accordion';
-import Map from './map';
-// import { DatePicker } from '@nextui-org/date-picker';
+"use client";
+import React from "react";
+import { Img, Button, Heading, Input } from "@/components/";
+import AccordionComponent from "./accordion";
+import Map from "./map";
+import { DatePicker } from "@nextui-org/date-picker";
 
 export default function RentPage() {
   return (
@@ -14,13 +14,13 @@ export default function RentPage() {
             <div className="mt-1 flex flex-col gap-6 self-end">
               <div className="flex flex-wrap items-center gap-[31px]">
                 <Heading
-                  as={'h1'}
+                  as={"h1"}
                   className=" text-[20px] font-semibold text-white-a700 lg:text-[17px]"
                 >
                   Traveler:
                 </Heading>
                 <Heading
-                  as={'h2'}
+                  as={"h2"}
                   size="headings"
                   className="text-[16px] font-semibold text-white-a700 lg:text-[13px]"
                 >
@@ -43,32 +43,35 @@ export default function RentPage() {
               </div>
             </div>
           </div>
-          {/* <div className="flex items-center justify-center rounded-[14px] border border-solid border-black-900_04 bg-gray-900_03 p-3">
-            <div className=" flex flex-1 flex-wrap justify-center gap-[22px] px-1.5">
-              <Heading
-                as="h5"
-                className="text-[20px] font-semibold text-white-a700 lg:text-[17px]"
-              >
-                日期 TODO
-              </Heading>
-            </div>
-          </div> */}
-          {/* <DatePicker label="Birth date" className="max-w-[284px]" /> */}
-          <div>End Date</div>
-          <div className=" flex items-center justify-center rounded-[14px] border border-solid border-black-900_04 bg-gray-900_03 p-3">
-            <div>People</div>
-          </div>
-          <div>Price</div>
-          <div className="flex flex-col gap-[22px]">
+          <DatePicker label="Start Date" />
+          <DatePicker label="End date" className="w-full" />
+          <Input
+            label="People: "
+            type="number"
+            placeholder="1"
+            className="gap-2"
+            shape="round"
+            min={1}
+            value={1}
+          />
+          <label className="flex flex-col justify-start cursor-text bg-gray-900 text-white-a700 h-[88px] px-3.5 text-[20px] rounded-[10px]">
+            <div className="flex my-2">Price:</div>
+            <input
+              placeholder={"234.00  -   456.00"}
+              className="pl-0"
+              value={"234.00  -   456.00"}
+            />
+          </label>
+          <div className="flex flex-col gap-[22px] bg-gray-900 rounded-[10px]">
             <AccordionComponent />
-            <Button
-              size="xl"
-              shape="round"
-              className="self-stretch rounded-[10px] px-[34px] font-bold sm:px-4 bg-lime-400 text-black-900"
-            >
-              View listings
-            </Button>
           </div>
+          <Button
+            size="xl"
+            shape="round"
+            className="self-stretch mt-4 px-[34px] font-bold sm:px-4 bg-lime-400 text-black-900 rounded-[10px]"
+          >
+            View listings
+          </Button>
         </div>
       </div>
       <Map />

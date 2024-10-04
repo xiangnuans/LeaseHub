@@ -1,3 +1,4 @@
-import SolanaProvider from "./solana/provider";
+import SolanaProvider, { WalletButton } from "./solana/provider";
+import { ClusterProvider } from "./solana/cluster/provider";
 
-export { SolanaProvider };
+export { SolanaProvider, ClusterProvider, WalletButton };
