@@ -1,0 +1,29 @@
+{
+  "name": "@repo/react-query",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "peerDependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.51.11",
+    "@tanstack/react-query-next-experimental": "^5.51.11"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@tanstack/eslint-plugin-query": "^5.51.12",
+    "@tanstack/react-query-devtools": "^5.51.11",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  :root {
+    --black_900: #06120e;
+    --black_900_01: #0a0a0a;
+    --black_900_02: #000000;
+    --black_900_23: #00000023;
+    --blue_gray_100: #d3d3d3;
+    --blue_gray_100_01: #d9d9d9;
+    --blue_gray_900_23: #14293723;
+    --blue_gray_900_33: #14293733;
+    --gray_200: #ebebed;
+    --gray_200_99: #ebebed99;
+    --gray_300: #e6e6e6;
+    --gray_400: #b8b8b8;
+    --gray_50: #fff9f9;
+    --gray_900: #141414;
+    --gray_900_01: #121212;
+    --gray_900_02: #1d1d21;
+    --gray_900_99: #071a3399;
+    --gray_900_99_01: #05162c99;
+    --gray_900_99_02: #081e3a99;
+    --green_900: #2a4d0e;
+    --light_blue_a100: #81d6ff;
+    --light_blue_a100_01: #80d5ff;
+    --light_blue_a100_23: #80d5ff23;
+    --lime_400: #c5f250;
+    --lime_400_23: #c5f25023;
+    --white_a700: #ffffff;
+    --white_a700_1e: #ffffff1e;
+    --white_a700_23: #ffffff23;
+    --white_a700_33: #ffffff33;
+    --yellow_a700: #ffd200;
+    --yellow_a700_01: #ffd300;
+    --yellow_a700_23: #ffd320023;
+
+
+    /*-----border radius variables--------*/
+    --radius-xs: 5px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 14px;
+    --radius-2xl: 20px;
+    --radius-3xl: 30px;
+    --radius-4xl: 40px;
+
+
+    /*-----spaceing variables--------*/
+    --space-xs: 2px;
+    --space-sm: 4px;
+    --space-md: 8px;
+    --space-lg: 10px;
+    --space-xl: 12px;
+    --space-2xl: 14px;
+    --space-3xl: 16px;
+    --space-4xl: 20px;
+    --space-5xl: 22px;
+    --space-6xl: 24px;
+    --space-7xl: 26px;
+    --space-8xl: 28px;
+    --space-9xl: 32px;
+    --space-10xl: 34px;
+    --space-11xl: 38px;
+    --space-12xl: 40px;
+    --space-13xl: 42px;
+    --space-14xl: 62px;
+    --space-15xl: 64px;
+    --space-16xl: 120px;
+  }
+}
+
+@layer components {
+  .container-xs {
+    @apply w-full mx-auto
+  }
+}
