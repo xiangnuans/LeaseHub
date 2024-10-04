@@ -21,7 +21,7 @@ const Img: React.FC<React.PropsWithChildren<ImgProps>> = ({
   className = '',
   src = '',
   alt = 'defaltImage',
-  isStatic = false,
+  isStatic = true,
   width,
   height,
   ...restProps
