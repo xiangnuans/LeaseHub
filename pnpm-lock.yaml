@@ -66,6 +66,9 @@ importers:
       react:
         specifier: 18.3.1
         version: 18.3.1
+      react-accessible-accordion:
+        specifier: ^5.0.0
+        version: 5.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
@@ -8256,6 +8259,12 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
+  react-accessible-accordion@5.0.0:
+    resolution: {integrity: sha512-MT2obYpTgLIIfPr9d7hEyvPB5rg8uJcHpgA83JSRlEUHvzH48+8HJPvzSs+nM+XprTugDgLfhozO5qyJpBvYRQ==}
+    peerDependencies:
+      react: ^16.3.2 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.3 || ^17.0.0 || ^18.0.0
+
   react-devtools-core@5.3.1:
     resolution: {integrity: sha512-7FSb9meX0btdBQLwdFOwt6bGqvRPabmVMMslv8fgoSPqXyuGpgQe36kx8gR86XPw7aV1yVouTp6fyZ0EH+NfUw==}
 
@@ -12291,8 +12300,8 @@ snapshots:
       qrcode.react: 1.0.1(react@16.13.1)
       react: 16.13.1
       react-dom: 16.13.1(react@16.13.1)
-      react-modal: 3.16.1(react-dom@16.13.1(react@18.3.1))(react@16.13.1)
-      react-qr-reader: 2.2.1(react-dom@16.13.1(react@18.3.1))(react@16.13.1)
+      react-modal: 3.16.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
+      react-qr-reader: 2.2.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       rxjs: 6.6.7
       typescript: 4.9.5
 
@@ -21852,6 +21861,11 @@ snapshots:
       strip-json-comments: 2.0.1
     optional: true
 
+  react-accessible-accordion@5.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   react-devtools-core@5.3.1(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       shell-quote: 1.8.1
@@ -21882,7 +21896,7 @@ snapshots:
 
   react-lifecycles-compat@3.0.4: {}
 
-  react-modal@3.16.1(react-dom@16.13.1(react@18.3.1))(react@16.13.1):
+  react-modal@3.16.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1):
     dependencies:
       exenv: 1.2.2
       prop-types: 15.8.1
@@ -21943,7 +21957,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  react-qr-reader@2.2.1(react-dom@16.13.1(react@18.3.1))(react@16.13.1):
+  react-qr-reader@2.2.1(react-dom@16.13.1(react@16.13.1))(react@16.13.1):
     dependencies:
       jsqr: 1.4.0
       prop-types: 15.8.1
