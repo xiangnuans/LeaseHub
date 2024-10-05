@@ -8,7 +8,7 @@ export default function RentPage() {
   return (
     <div className="flex gap-[26px] md:flex-col w-full">
       <SearchCard />
-      <Map />
+      <Map type="investment" />
     </div>
   );
 }

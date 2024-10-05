@@ -11,8 +11,23 @@ import SearchBathtubIcon from "@/assets/icons/rent/seclect/baththub.svg";
 import SolIcon from "@/assets/icons/travel-sol.svg";
 import ArrowDown from "@/assets/icons/rent/seclect/arrow-down.svg";
 import MapSizeIcon from "@/assets/icons/rent/map-rate.svg";
+import { useRouter } from "next/navigation";
 
-export default function Map() {
+interface Props {
+  type: "investment" | "rent";
+}
+
+export default function Map({ type }: Props) {
+  const router = useRouter();
+
+  const handleSelectPlace = () => {
+    if (type === "investment") {
+      router.push("/investment/1");
+    }
+    if (type === "rent") {
+      router.push("/rent/1");
+    }
+  };
   return (
     <>
       <div
@@ -86,7 +101,10 @@ export default function Map() {
               className="mt-[52px] h-[50px] w-[50px] md:w-full"
             />
             <div className="flex w-[66%] flex-col items-end self-center md:w-full">
-              <div className="flex w-[80%] items-center justify-center gap-3.5 rounded-[20px] bg-black-900 p-4 shadow-sm lg:w-full md:w-full">
+              <div
+                onClick={handleSelectPlace}
+                className="flex w-[80%] items-center justify-center gap-3.5 rounded-[20px] bg-black-900 p-4 shadow-sm lg:w-full md:w-full"
+              >
                 <Img
                   src={SelectImage}
                   width={130}
