@@ -20,16 +20,16 @@ export default function StakePage() {
         src={LeftArrow}
         alt="Left Arrow"
         isStatic={true}
-        className="absolute left-[6%] top-[54%] transform -translate-y-1/2 w-[30%] h-auto object-contain md:w-[30%]"
+        className="absolute left-[5%] top-[52%] transform -translate-y-1/2 w-[30%] h-auto object-contain md:w-[30%]"
       />
       <Img
         src={RightArrow}
         alt="Right Arrow"
         isStatic={true}
-        className="absolute right-0 top-1/3 transform -translate-y-1/2 w-[70%] h-auto object-contain md:w-[30%]"
+        className="absolute right-0 top-[30%] transform -translate-y-1/2 w-[70%] h-auto object-contain md:w-[30%]"
       />
 
-      <div className="flex items-center justify-center h-full w-full px-5 py-[8%]">
+      <div className="flex items-center justify-center h-full w-full px-5 pt-[5%]">
         <div className="flex w-[62%] gap-[60px] justify-center relative z-10 md:flex-col md:w-full">
           <Card />
           <Card
