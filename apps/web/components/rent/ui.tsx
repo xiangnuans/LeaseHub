@@ -7,7 +7,7 @@ import { DatePicker } from "@nextui-org/date-picker";
 
 export default function RentPage() {
   return (
-    <div className="flex gap-[26px] md:flex-col">
+    <div className="flex gap-[26px] md:flex-col w-full">
       <div className="w-[32%] md:flex-col">
         <div className="flex flex-col gap-3 rounded-[14px] border-2 border-solid border-lime-400 p-[22px] sm:p-4">
           <div className="row-border border-2  border-solid border-lime-400 rounded-[20px] bg-gradient2 p-5">

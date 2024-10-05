@@ -85,7 +85,7 @@ export default function Map() {
               alt=""
               className="mt-[52px] h-[50px] w-[50px] md:w-full"
             />
-            <div className="flex w-[78%] flex-col items-end self-center md:w-full">
+            <div className="flex w-[66%] flex-col items-end self-center md:w-full">
               <div className="flex w-[80%] items-center justify-center gap-3.5 rounded-[20px] bg-black-900 p-4 shadow-sm lg:w-full md:w-full">
                 <Img
                   src={SelectImage}

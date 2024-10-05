@@ -72,7 +72,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -87,7 +87,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -102,7 +102,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -117,7 +117,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -134,7 +134,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -149,7 +149,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -164,7 +164,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
@@ -179,7 +179,7 @@ export default function AccordionComponent() {
                       className="h-[14px]"
                     />
                     <Heading
-                      size="headingmd"
+                      size="headingxs"
                       as="p"
                       className="text-[13.32px] font-medium text-white-a700"
                     >
