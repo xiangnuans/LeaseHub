@@ -8,9 +8,11 @@ interface Props {
   userRoleText?: React.ReactNode;
   stakeButton?: string;
   pledgeDescription?: React.ReactNode;
+  onClick?: () => void;
 }
 
 export default function StakeCard({
+  onClick,
   userImage = TravelImage,
   userRoleText = "I am a passenger",
   stakeButton = "Stake for Travel",
@@ -39,6 +41,7 @@ export default function StakeCard({
         </Heading>
 
         <Button
+          onClick={onClick}
           size="lg"
           variant="outline"
           shape="round"

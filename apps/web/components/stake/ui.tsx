@@ -5,8 +5,13 @@ import Card from "./card";
 import Verifier from "@/assets/images/stake/verifier.svg";
 import LeftArrow from "@/assets/images/stake/left-arrow.svg";
 import RightArrow from "@/assets/images/stake/right-arrow.svg";
+import { useRouter } from "next/navigation";
 
 export default function StakePage() {
+  const router = useRouter();
+  const handleTravel = () => {
+    router.push("/stake/address");
+  };
   return (
     <div
       className="relative w-full min-h-screen bg-no-repeat bg-cover bg-center"
@@ -31,7 +36,7 @@ export default function StakePage() {
 
       <div className="flex items-center justify-center h-full w-full px-5 pt-[5%]">
         <div className="flex w-[62%] gap-[60px] justify-center relative z-10 md:flex-col md:w-full">
-          <Card />
+          <Card onClick={handleTravel} />
           <Card
             userImage={Verifier}
             userRoleText="I'm the verifier"
