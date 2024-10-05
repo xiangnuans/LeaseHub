@@ -1,15 +1,14 @@
 "use client";
 import React from "react";
 
-import Map from "@/components/map";
-
 import SearchCard from "../searchCard";
+import RoomCard from "../room/ui";
 
-export default function RentPage() {
+export default function RentRoomPage() {
   return (
     <div className="flex gap-[26px] md:flex-col w-full">
       <SearchCard />
-      <Map />
+      <RoomCard />
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import LeaseHubSolanaDappFeature from '@/components/lease-hub-solana-dapp/lease-hub-solana-dapp-feature';
+import InvestmentPage from "@/components/investment/ui";
 
 export default function Page() {
-  return <LeaseHubSolanaDappFeature />;
+  return <InvestmentPage />;
 }

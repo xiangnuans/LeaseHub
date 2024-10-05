@@ -21,8 +21,8 @@ export const siteConfig = {
       path: "/rent",
     },
     {
-      label: "Mini House",
-      path: "/mini-house",
+      label: "Mint",
+      path: "/mint",
     },
     {
       label: "Investment",
