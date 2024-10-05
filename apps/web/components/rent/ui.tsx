@@ -2,7 +2,6 @@
 import React from "react";
 
 import Map from "@/components/map";
-
 import SearchCard from "../searchCard";
 
 export default function RentPage() {

@@ -11,6 +11,8 @@ import { WalletButton } from "@repo/wallet-provider";
 export default function UiLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
+  console.log("???", pathname);
+
   return (
     <div className="min-h-screen flex w-full flex-col items-center gap-[98px] bg-black-900_02 py-[52px] lg:gap-[98px] xl:gap-[160px] md:gap-[73px]  md:py-5 sm:gap-[49px] sm:py-4 mx-auto">
       <div className="w-[76%] lg:px-5 md:px-5">
@@ -29,7 +31,13 @@ export default function UiLayout({ children }: { children: ReactNode }) {
               <li key={path}>
                 <Link
                   className={`${
-                    pathname === path ? "text-[#c5f250]" : "text-[#b8b8b8]"
+                    path === "/"
+                      ? pathname === path // 首页只匹配完全等于 "/"
+                        ? "text-[#c5f250]"
+                        : "text-[#b8b8b8]"
+                      : pathname.startsWith(path) // 其他页面使用 startsWith 进行匹配
+                        ? "text-[#c5f250]"
+                        : "text-[#b8b8b8]"
                   } text-[17px] font-semibold font-['Poppins']`}
                   href={path}
                 >
