@@ -21,7 +21,12 @@ const pictureMock = [
   },
 ];
 
-export default function RoomCard() {
+interface Props {
+  children?: any;
+  className?: string;
+}
+
+const RoomCard = ({ children, className }: Props) => {
   return (
     <div className="flex-1 md:self-stretch">
       <div className="flex items-start gap-[22px] rounded-[14px] border-2 border-solid border-lime-400 px-[26px] py-7 md:flex-col sm:p-4">
@@ -49,23 +54,27 @@ export default function RoomCard() {
               </Suspense>
             </div>
           </div>
-          <div className="mt-9 flex flex-col items-start">
-            <DatePicker label="Start Date" />
-            <DatePicker label="End date" className="w-full mt-4" />
-            <Button
-              size="xl"
-              shape="round"
-              className="mt-7 self-stretch rounded-[10px] px-[34px] bg-lime-400  text-black-900 font-bold sm:px-4"
-            >
-              Take it
-            </Button>
-            <Heading
-              as="h5"
-              className="ml-3 mt-7 text-[20px] font-semibold text-white-a700 lg:text-[17px] md:ml-0"
-            >
-              Want to investment?
-            </Heading>
-          </div>
+          {children ? (
+            children
+          ) : (
+            <div className="mt-9 flex flex-col items-start">
+              <DatePicker label="Start Date" />
+              <DatePicker label="End date" className="w-full mt-4" />
+              <Button
+                size="xl"
+                shape="round"
+                className="mt-7 self-stretch rounded-[10px] px-[34px] bg-lime-400  text-black-900 font-bold sm:px-4"
+              >
+                Take it
+              </Button>
+              <Heading
+                as="h5"
+                className="ml-3 mt-7 text-[20px] font-semibold text-white-a700 lg:text-[17px] md:ml-0"
+              >
+                Want to investment?
+              </Heading>
+            </div>
+          )}
         </div>
         <div className="mb-2 flex w-[46%] flex-col items-start gap-4 self-center md:w-full">
           <div className="flex flex-col items-start self-stretch">
@@ -203,4 +212,6 @@ export default function RoomCard() {
       </div>
     </div>
   );
-}
+};
+
+export default RoomCard;

@@ -13,7 +13,7 @@ export default function InvestmentHead() {
         <Heading
           as={"h2"}
           size="headings"
-          className="text-[16px] font-semibold text-white-a700 lg:text-[13px]"
+          className="text-[16px] font-semibold !text-lime-400 lg:text-[13px]"
         >
           0xBBB6A7...6hn9
         </Heading>
@@ -23,14 +23,13 @@ export default function InvestmentHead() {
           as="h3"
           className="text-[20px] font-semibold text-white-a700 lg:text-[17px]"
         >
-          Lock in equity:
+          SOL quantity:
         </Heading>
-        <Input value={20} />
         <Heading
-          as="h5"
-          className="text-[20px] font-semibold text-white-a700 lg:text-[17px]"
+          as="h4"
+          className="text-[20px] font-semibold !text-lime-400 lg:text-[17px]"
         >
-          %
+          142.63
         </Heading>
       </div>
       <div className=" flex felx-wrap gap-4">
@@ -38,13 +37,27 @@ export default function InvestmentHead() {
           as="h6"
           className="text-[20px] font-semibold text-white-a700 lg:text-[17px]"
         >
-          Release equity:
+          Tokens in this houses:
         </Heading>
         <Heading
           as="h5"
           className="text-[20px] font-semibold !text-lime-400 lg:text-[17px]"
         >
-          80%
+          200
+        </Heading>
+      </div>
+      <div className=" flex felx-wrap gap-4">
+        <Heading
+          as="h6"
+          className="text-[20px] font-semibold text-white-a700 lg:text-[17px]"
+        >
+          Locked quantity:
+        </Heading>
+        <Heading
+          as="h5"
+          className="text-[20px] font-semibold !text-lime-400 lg:text-[17px]"
+        >
+          100
         </Heading>
       </div>
     </div>

@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     screens: {
+      "3xl": {
+        max: "1920px"
+      },
       lg: {
         max: "1440px",
       },
