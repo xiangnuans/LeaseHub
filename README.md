@@ -1,128 +1,41 @@
-# Ton NFT Turborepo
+Welcome to LeaseHub! Our platform revolutionizes real estate management by allowing property owners to tokenize their assets, providing a flexible way to manage ownership and generate income.
 
-## What's inside?
+Project Overview
+LeaseHub aims to offer a new approach to property management for owners and a unique accommodation experience for travel enthusiasts.
 
-This turborepo includes the following packages/apps:
+For Property Owners
+Rent Out Properties: List your properties for rent and earn rental income.
+Tokenize Assets: Sell partial ownership of your property as tokens to gain liquidity in SOL (Solana).
+Delist Properties: Remove your property from the platform if you own all tokens.
+For Token Holders
+Earn Rental Income: Receive a share of the rental income proportional to your token ownership.
+Trade Tokens: Sell your property tokens to gain liquidity in SOL.
+For Travelers
+Stake SOL: Both regular users and property owners can stake SOL to earn reward tokens.
+Book Accommodations: Use earned reward tokens to pay for property rentals.
+For Investors
+Purchase Property Tokens: Invest in desirable properties by buying tokens using SOL.
+Key Features
+Decentralized property management
+Fractional ownership through tokenization
+Passive income generation
+Flexible investment opportunities
+Reward system for platform engagement
+Technology Stack
+Blockchain: Solana
+Smart Contracts: Rust
+Frontend: React.js
+Backend: Node.js
+How to Contribute
+We welcome developers and users interested in LeaseHub to contribute to our project. To get involved:
 
-### Apps and Packages
+Fork the Repository: Create your own copy of the project on GitHub.
+Create a Branch: Make a new branch for your feature or bug fix.
+Make Changes: Implement your changes and commit them.
+Submit a Pull Request: Share your contributions with us through a GitHub Pull Request.
+Contact Us
+For any questions or suggestions, please reach out:
 
-- `miniapp`: a [Next.js](https://nextjs.org/) telegram mini app
-- `admin-panel`: a [Next.js](https://nextjs.org/) admin panel
-- `contracts`: TON contracts folder
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-- `@repo/database`: [Prisma](https://prisma.io/) ORM wrapper to manage & access your database
-- `@repo/react-query`: [Tanstack Query](https://tanstack.com/query/latest/docs) data-fetching library
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-- [Prisma](https://prisma.io/) for database ORM
-- [Docker Compose](https://docs.docker.com/compose/) for local database
-
-### Database
-
-We use [Prisma](https://prisma.io/) to manage & access our database. As such you will need a database for this project, either locally or hosted in the cloud.
-
-To make this process easier, we offer a [`docker-compose.yml`](https://docs.docker.com/compose/) file to deploy a Postgres server locally with a new database named `ton_nft_db`
-
-```bash
-cd my-turborepo
-docker-compose up -d
-```
-
-Once deployed you will need to copy the `.env.example` file to `.env` in order for Prisma to have a `DATABASE_URL` environment variable to access.
-
-```bash
-cp .env.example .env
-```
-
-If you added a custom database name, or use a cloud based database, you will need to update the `DATABASE_URL` in your `.env` accordingly.
-
-Once deployed & up & running, you will need to create & deploy migrations to your database to add the necessary tables. This can be done using `generate`
-
-```bash
-cd packages/database
-pnpm db:generate
-```
-
-If you need to push any existing migrations to the database, you can use either the Prisma db push or the Prisma migrate deploy command(s):
-
-```bash
-pnpm db:push
-
-```
-
-There is slight difference between the two commands & [Prisma offers a breakdown on which command is best to use](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push#choosing-db-push-or-prisma-migrate).
-
-An optional additional step is to seed some initial or fake data to your database using [Prisma's seeding functionality](https://www.prisma.io/docs/guides/database/seed-database).
-
-To do this update check the seed script located in `packages/database/src/seed.ts` & add or update any users you wish to seed to the database.
-
-Once edited run the following command to run tell Prisma to run the seed script defined in the Prisma configuration:
-
-```bash
-pnpm db:seed
-```
-
-For further more information on migrations, seeding & more, we recommend reading through the [Prisma Documentation](https://www.prisma.io/docs/).
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```bash
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```bash
-pnpm dev
-```
-
-## Install Packages
-
-[doc link](https://turbo.build/repo/docs/crafting-your-repository/managing-dependencies)
-
-```bash
- pnpm add react-icons --recursive --filter=miniapp --filter=admin-panel
-```
-
-## Update Packages
-
-```bash
-pnpm up --recursive typescript@latest
-```
-
-## Clean cache
-
-```bash
-pnpm prune
-```
-
-
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
-
-
-## 服务端部署 
-
-### 部署报错 ../../prisma/xxxx时 进入到 packages/database 执行 npx prisma generate
+Email: caesearzo@gmail.com
+Social Media: Twitter | Telegram
+Thank you for your interest in LeaseHub! Together, let's shape the future of real estate.
