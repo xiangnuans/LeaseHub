@@ -1,0 +1,115 @@
+html,
+body {
+  height: 100%;
+  font-family: Poppins;
+}
+
+* {
+  box-sizing: border-box;
+  line-height: normal;
+  font-family: inherit;
+  margin: unset;
+}
+
+.wallet-adapter-button-trigger {
+  background-color: #000000 !important;
+  border-width: 1px !important;
+  border-radius: 8px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+
+}
+.wallet-adapter-dropdown-list {
+    font-family: inherit !important;
+   
+}
+.wallet-adapter-modal-list .wallet-adapter-button {
+  color: #FFFFFF !important;
+  border: none !important;
+}
+.wallet-adapter-button {
+  font-family: inherit !important;
+  color: #c5f250 !important;
+  border: 1px solid #C5F250 !important;
+}
+
+
+.rowboxtwo_one_border {
+  backdrop-filter: blur(1px);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #80d5ff, #ffd200);
+    background-clip: border-box;
+    mask: 
+      linear-gradient(#fff 0 0) padding-box, 
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude !important;
+    z-index: -10;
+    border-radius: 40px;
+    border: 2px solid transparent;
+  }
+}
+
+.rowcurrentstake_border {
+  backdrop-filter: blur(1px);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c5f250, #ffd200);
+    background-clip: border-box;
+    mask: 
+      linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude !important;
+    z-index: -10;
+    border-radius: 40px;
+    border: 2px solid transparent;
+  }
+}
+
+.row_border {
+  backdrop-filter: blur(1px);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c5f250, #ffd200);
+    background-clip: border-box;
+    mask: 
+      linear-gradient(#fff 0 0) padding-box, 
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude !important;
+    z-index: -10;
+    border-radius: 20px;
+    border: 2px solid transparent;
+  }
+}
+
+.light_blue_A100_01_yellow_A700_border {
+  border-image: linear-gradient(135deg, #80d5ff, #ffd200);
+}
+
+a {
+  text-decoration: none;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  margin-inline: unset !important;
+  padding: 0;
+  list-style: none;
+}
+
+input {
+  background-color: transparent !important;
+  width: 100%;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
