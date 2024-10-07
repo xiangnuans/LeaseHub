@@ -1,6 +1,8 @@
 use anchor_lang::prelude::*;
 use crate::state::*;
 use anchor_spl::{
+    associated_token::AssociatedToken,
+
     token::{self,Mint,MintTo,Token, TokenAccount, Transfer},
 };
 
@@ -10,7 +12,8 @@ pub fn initialize(ctx: Context<Initialize>, reward_per_slot: u64) -> Result<()> 
     pool.reward_mint = ctx.accounts.reward_mint.key();
     pool.staking_mint = ctx.accounts.staking_mint.key();
     pool.reward_authority = ctx.accounts.reward_authority.key();
-    pool.stake_authority = ctx.accounts.stake_authority.key();
+    pool.pool_authority = ctx.accounts.pool_authority.key();
+    pool.pool_staking_account = ctx.accounts.pool_staking_account.key();
     pool.total_staked = 0;
     pool.reward_per_slot = reward_per_slot;
     pool.last_update_slot = Clock::get()?.slot;
@@ -27,6 +30,18 @@ pub struct Initialize<'info> {
     pub reward_mint: Account<'info, Mint>,  //奖励代币的mint
     #[account(mut, mint::authority = stake_authority)]
     pub staking_mint: Account<'info, Mint>, //
+
+    #[account(seeds = [b"pool_authority", pool.key().as_ref()], bump)]
+    /// CHECK: This is a PDA used as mint authority
+    pub pool_authority: UncheckedAccount<'info>,
+    #[account(init, 
+        payer = user,
+        associated_token::mint = staking_mint,
+        associated_token::authority = pool_authority
+        
+    )]
+    pub pool_staking_account: Account<'info, TokenAccount>,
+
     #[account(
         seeds = [b"reward_authority", pool.key().as_ref()],
         bump,
@@ -39,6 +54,8 @@ pub struct Initialize<'info> {
     pub stake_authority: UncheckedAccount<'info>, //奖励代币的authority 是程序的pda账户
     #[account(mut)]
     pub user: Signer<'info>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub token_program:AccountInfo<'info>,
     pub system_program: Program<'info, System>,
 }
 
@@ -132,9 +149,11 @@ pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
         .unwrap();
 
     // Transfer staked tokens back to user
-    let stake_seeds = &[pool.stake_authority.as_ref()];
+    let pool_seeds = &[pool.pool_authority.as_ref()];
+    
+    let pool_signer = &[&pool_seeds[..]];
+
     let reward_seeds = &[pool.reward_authority.as_ref()];
-    let stake_signer = &[&stake_seeds[..]];
     let reward_signer = &[&reward_seeds[..]];
     let cpi_accounts = Transfer {
         from: ctx.accounts.pool_staking_account.to_account_info(),
@@ -142,7 +161,7 @@ pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
         authority: ctx.accounts.stake_authority.to_account_info(),
     };
     let cpi_program = ctx.accounts.token_program.to_account_info();
-    let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, stake_signer);
+    let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, pool_signer);
     token::transfer(cpi_ctx, amount)?;
 
     // Transfer rewards to user
