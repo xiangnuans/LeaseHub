@@ -1,1 +1,1 @@
-pub const DISCRIMINATOR_SIZE: usize = 8;
+pub const REWARD_DURATION: u64 = 86400*7;
