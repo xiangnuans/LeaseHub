@@ -1,12 +1,12 @@
-"use client";
-import React from "react";
-import { Img, Button, Heading, Text, Input } from "@/components/";
-import BoxImage from "@/assets/images/stake/travel-box.svg";
-import SolIcon from "@/assets/icons/travel-sol.svg";
-import BackIcon from "@/assets/icons/travel-back-arrow.svg";
-import CopyIcon from "@/assets/icons/copy.svg";
-import RightArrowIcon from "@/assets/icons/travel-right-arrow.svg";
-import { useRouter } from "next/navigation";
+'use client';
+import React from 'react';
+import { Img, Button, Heading, Text, Input } from '@/components/';
+import BoxImage from '@/assets/images/stake/travel-box.svg';
+import SolIcon from '@/assets/icons/travel-sol.svg';
+import BackIcon from '@/assets/icons/travel-back-arrow.svg';
+import CopyIcon from '@/assets/icons/copy.svg';
+import RightArrowIcon from '@/assets/icons/travel-right-arrow.svg';
+import { useRouter } from 'next/navigation';
 
 export default function StakeTravel() {
   const router = useRouter();
@@ -52,15 +52,15 @@ export default function StakeTravel() {
               as="p"
               className="text-[14px] font-normal text-gray-400"
             >
-              {"0xBBB6A745sadasd2dsds6hn9"}
+              {/* {'0xBBB6A745sadasd2dsds6hn9'} */}
             </Text>
-            <Img
+            {/* <Img
               src={CopyIcon}
               width={18}
               height={18}
               alt="Image"
               className="h-[18px] w-[18px]"
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function StakeTravel() {
                   </Text>
                   <Heading
                     size="heading3xl"
-                    as={"h3"}
+                    as={'h3'}
                     className="font-dinalternate text-[36px] font-bold !text-lime-400 lg:text-[30px] md:text-[30px] sm:text-[28px]"
                   >
                     8,560.00
@@ -133,7 +133,7 @@ export default function StakeTravel() {
                   </Text>
                   <Heading
                     size="heading3xl"
-                    as={"h4"}
+                    as={'h4'}
                     className="mr-1.5 font-dinalternate text-[36px] font-bold !text-lime-400 lg:text-[30px] md:mr-0 md:text-[30px] sm:text-[28px]"
                   >
                     230,00
@@ -170,7 +170,7 @@ export default function StakeTravel() {
                       as="p"
                       className="text-[16px] font-medium text-white-a700 lg:text-[13px]"
                     >
-                      Augment stake
+                      amount
                     </Text>
                   </div>
                   <div className="flex gap-[22px] sm:flex-col">
@@ -178,7 +178,7 @@ export default function StakeTravel() {
                       <Input
                         shape="round"
                         name="inputnumber_one"
-                        placeholder={"50"}
+                        placeholder={'50'}
                         className="mx-auto flex-grow rounded-[10px] px-4 font-semibold"
                       />
                       <Button
@@ -187,7 +187,7 @@ export default function StakeTravel() {
                         shape="round"
                         className=" absolute bottom-0 right-3.5 top-0 my-auto min-w-[60px] rounded-lg !border px-[15px] font-bold !text-white-a700"
                       >
-                        MAX
+                        5 sol
                       </Button>
                     </div>
                     <Button
@@ -195,7 +195,7 @@ export default function StakeTravel() {
                       shape="round"
                       className="min-w-[178px] rounded-[10px] px-[34px] font-bold sm:px-4 bg-lime-400 text-black-900"
                     >
-                      Augment
+                      Stake
                     </Button>
                   </div>
                 </div>
@@ -205,7 +205,7 @@ export default function StakeTravel() {
                       as="p"
                       className="text-[16px] font-medium text-white-a700 lg:text-[13px]"
                     >
-                      Withdraw stake
+                      amount
                     </Text>
                   </div>
                   <div className="flex justify-center gap-5 sm:flex-col">
@@ -213,7 +213,7 @@ export default function StakeTravel() {
                       <Input
                         shape="round"
                         name="inputnumber"
-                        placeholder={"50"}
+                        placeholder={'50'}
                         className="mx-auto rounded-[10px] px-4"
                       />
                       <Button
@@ -230,7 +230,7 @@ export default function StakeTravel() {
                       shape="round"
                       className="min-w-[178px] rounded-[10px] px-[34px] font-bold sm:px-4 bg-lime-400 text-black-900"
                     >
-                      Whithdraw
+                      Withdrew
                     </Button>
                   </div>
                 </div>
