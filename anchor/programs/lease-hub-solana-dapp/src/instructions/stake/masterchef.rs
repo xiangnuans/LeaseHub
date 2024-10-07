@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use crate::state::*;
 use anchor_spl::{
-    token::{self,MintTo,Token, TokenAccount, Transfer},
+    token::{self,Mint,MintTo,Token, TokenAccount, Transfer},
 };
 
 
@@ -17,6 +17,29 @@ pub fn initialize(ctx: Context<Initialize>, reward_per_slot: u64) -> Result<()> 
     pool.acc_reward_per_share = 0;
     
     Ok(())
+}
+
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    #[account(init, payer = user, space = 8 + 32 + 32 + 32 + 8 + 8 + 8 + 16 + 1)]
+    pub pool: Account<'info, Pool>,
+    #[account(mut, mint::authority = reward_authority)]
+    pub reward_mint: Account<'info, Mint>,  //奖励代币的mint
+    #[account(mut, mint::authority = stake_authority)]
+    pub staking_mint: Account<'info, Mint>, //
+    #[account(
+        seeds = [b"reward_authority", pool.key().as_ref()],
+        bump,
+    )]
+    pub reward_authority: UncheckedAccount<'info>, //奖励代币的authority 是程序的pda账户
+    #[account(
+        seeds = [b"stake_authority", pool.key().as_ref()],
+        bump,
+    )]
+    pub stake_authority: UncheckedAccount<'info>, //奖励代币的authority 是程序的pda账户
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
 
 
@@ -57,7 +80,36 @@ pub fn stake(ctx: Context<Stake>, amount: u64) -> Result<()> {
 
     Ok(())
 }
-    
+   
+#[derive(Accounts)]
+#[instruction(amount: u64)]
+pub struct Stake<'info> {
+    #[account(mut)]
+    pub pool: Account<'info, Pool>,
+    #[account(init_if_needed, 
+        payer = user_authority, 
+        space = 8 + 32 + 32 + 8 + 8,
+        seeds = [b"user", user_authority.key().as_ref()],
+        bump,
+    )]
+    pub user: Account<'info, User>,
+    #[account(mut, 
+        constraint = user_staking_account.owner == user_authority.key(),
+        constraint = user_staking_account.mint == pool.staking_mint
+    )]
+    pub user_staking_account: Account<'info, TokenAccount>,
+    #[account(mut, 
+        constraint = pool_staking_account.owner == pool.key(),
+        constraint = pool_staking_account.mint == pool.staking_mint
+    )]
+    pub pool_staking_account: Account<'info, TokenAccount>,
+    #[account(mut)]
+    pub user_authority: Signer<'info>,
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+}
+
+
 pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
     
     if amount == 0 {
@@ -117,6 +169,45 @@ pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
     Ok(())
 }
 
+#[derive(Accounts)]
+pub struct Unstake<'info> {
+    #[account(mut)]
+    pub pool: Account<'info, Pool>,
+    #[account(mut)]
+    pub user: Account<'info, User>,
+    #[account(mut, constraint = user_staking_account.owner == user_authority.key(),
+                    constraint = user_staking_account.mint == pool.staking_mint
+    )]   
+    pub user_staking_account: Account<'info, TokenAccount>,
+    #[account(mut, constraint = pool_staking_account.owner == pool.key(),
+                    constraint = pool_staking_account.mint == pool.staking_mint
+    )]
+    pub pool_staking_account: Account<'info, TokenAccount>,
+    #[account(mut, constraint = user_reward_account.owner == user_authority.key(),
+                    constraint = user_reward_account.mint == reward_mint.key()
+    )]
+    pub user_reward_account: Account<'info, TokenAccount>,
+
+    #[account(constraint = reward_mint.key() == pool.reward_mint)]
+    pub reward_mint: Account<'info, Mint>,
+
+    pub user_authority: Signer<'info>,
+    /// CHECK: This is the PDA that signs for the pool
+    #[account(
+        seeds = [b"stake_authority", pool.key().as_ref()],
+        bump,
+    )]
+    pub stake_authority: UncheckedAccount<'info>,
+    #[account(
+        seeds = [b"reward_authority", pool.key().as_ref()],
+        bump,
+    )]
+    pub reward_authority: UncheckedAccount<'info>,
+    pub token_program: Program<'info, Token>,
+}
+
+
+
 pub fn pending_reward(ctx: Context<PendingReward>) -> Result<()> {
     let pool = &ctx.accounts.pool;
     let user = &ctx.accounts.user;
@@ -142,6 +233,11 @@ pub struct Rewardmasterchef {
     pub amount: u64,
 }
 
+#[derive(Accounts)]
+pub struct PendingReward<'info> {
+    pub pool: Account<'info, Pool>,
+    pub user: Account<'info, User>,
+}
 
 
 pub fn claim_reward_masterchef(ctx: Context<ClaimRewardMasterchef>) -> Result<()> {
@@ -189,6 +285,28 @@ pub fn claim_reward_masterchef(ctx: Context<ClaimRewardMasterchef>) -> Result<()
     Ok(())
 }
 
+#[derive(Accounts)]
+pub struct ClaimRewardMasterchef<'info> {
+    #[account(mut)]
+    pub pool: Account<'info, Pool>,
+    #[account(mut, mint::authority = pool.reward_authority)]
+    pub reward_mint: Account<'info, Mint>,
+    #[account(mut, owner = user_authority.key())]
+    pub user: Account<'info, User>,
+    #[account(mut,constraint = user_reward_account.owner == user_authority.key(),
+                constraint = user_reward_account.mint == pool.reward_mint
+    )]
+    pub user_reward_account: Account<'info, TokenAccount>,
+
+    pub user_authority: Signer<'info>,
+    #[account(
+        seeds = [b"reward_authority", pool.key().as_ref()],
+        bump,
+    )]
+    pub reward_authority: UncheckedAccount<'info>,
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+}
 
 fn update_pool(pool: &mut Account<Pool>) -> Result<()> {
     // 获取当前时间槽

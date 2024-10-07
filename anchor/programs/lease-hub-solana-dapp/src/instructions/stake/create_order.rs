@@ -2,7 +2,8 @@ use anchor_lang::prelude::*;
 use crate::state::*;
 
 use anchor_spl::{
-    token::{Token, TokenAccount, Transfer, transfer},
+    associated_token::AssociatedToken,
+    token::{Token, Mint,TokenAccount, Transfer, transfer},
 };
 use crate::error::ErrorCode;
 use crate::constants::*;
@@ -41,6 +42,42 @@ pub fn create_room_order_and_paid(ctx: Context<CreateRoomOrderAndPaid>) -> Resul
     Ok(())
 }
 
+#[derive(Accounts)]
+pub struct CreateRoomOrderAndPaid<'info> {
+    
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+    #[account(
+        init,
+        payer = user,
+        space = 8 + 8 + 8 + 32 + 1 + 32, // discriminator + nonce + rewards + creator + paid + payer
+        constraint = nft_manager.nonce == room_order.nonce,
+        seeds = [b"room_order", nft_manager.nonce.to_le_bytes().as_ref()],
+        bump
+    )]
+    pub room_order: Account<'info, RoomOrder>,
+
+    #[account(mut)]
+    pub user: Signer<'info>,
+
+    #[account(
+        mut,
+        associated_token::mint = reward_mint,
+        associated_token::authority = user
+    )]
+    pub user_token_account: Account<'info, TokenAccount>,
+
+    pub reward_mint: Account<'info, Mint>,
+    #[account(
+        mut,
+        constraint = rent_rewards.key() == nft_manager.rent_rewards
+    )]
+    pub rent_rewards: Account<'info, TokenAccount>,
+    pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub rent: Sysvar<'info, Rent>,
+}
 
 pub fn create_room_order_to_sell(ctx: Context<RoomOrderToSell>) -> Result<()> {
     let room_order = &mut ctx.accounts.room_order;
@@ -52,6 +89,28 @@ pub fn create_room_order_to_sell(ctx: Context<RoomOrderToSell>) -> Result<()> {
     room_order.creator = user.key();
     Ok(())
 }
+
+#[derive(Accounts)]
+pub struct RoomOrderToSell<'info> {
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+    #[account(
+        init,
+        payer = user,
+        space = 8 + 8 + 8 + 8 + 8 + 8 + 32 + 1 + 32 + 4 + 4, // discriminator + start_time + end_time + days + nonce + paid_rewards + price + creator + status + payer + bytes + signature
+        constraint = nft_manager.nonce == room_order.nonce,
+        seeds = [b"room_order", nft_manager.nonce.to_le_bytes().as_ref()],
+        bump
+    )]
+    pub room_order: Account<'info, RoomOrder>,
+
+    #[account(mut)]
+    pub user: Signer<'info>,
+
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+}
+
 
 pub fn pay_for_existing_order(ctx: Context<PayForExistingOrder>) -> Result<()> {
     let nft_manager = &mut ctx.accounts.nft_manager;
@@ -83,6 +142,39 @@ pub fn pay_for_existing_order(ctx: Context<PayForExistingOrder>) -> Result<()> {
     room_order.payer = ctx.accounts.user.key();
 
     Ok(())
+}
+
+#[derive(Accounts)]
+pub struct PayForExistingOrder<'info> {
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+
+    #[account(
+        mut,
+        seeds = [b"room_order", room_order.nonce.to_le_bytes().as_ref()],
+        bump,
+        constraint = room_order.status == 1
+    )]
+    pub room_order: Account<'info, RoomOrder>,
+
+    #[account(mut)]
+    pub user: Signer<'info>,
+
+    #[account(
+        mut,
+        associated_token::mint = nft_manager.rewards_mint,
+        associated_token::authority = user
+    )]
+    pub user_token_account: Account<'info, TokenAccount>,
+
+    #[account(
+        mut,
+        constraint = rent_rewards.key() == nft_manager.rent_rewards
+    )]
+    pub rent_rewards: Account<'info, TokenAccount>,
+
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
 }
 
 pub fn cancel_order(ctx: Context<CancelOrder>) -> Result<()> {
@@ -124,6 +216,43 @@ pub fn cancel_order(ctx: Context<CancelOrder>) -> Result<()> {
     room_order.status = 3;
 
     Ok(())
+}
+
+#[derive(Accounts)]
+pub struct CancelOrder<'info> {
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+
+    #[account(
+        mut,
+        seeds = [b"room_order", room_order.nonce.to_le_bytes().as_ref()],
+        bump,
+        constraint = room_order.status == 1 || room_order.status == 2
+    )]
+    pub room_order: Account<'info, RoomOrder>,
+
+    #[account(mut)]
+    pub user: Signer<'info>,
+
+    #[account(
+        mut,
+        associated_token::mint = nft_manager.rewards_mint,
+        associated_token::authority = user
+    )]
+    pub user_token_account: Account<'info, TokenAccount>,
+
+    #[account(
+        mut,
+        constraint = rent_rewards.key() == nft_manager.rent_rewards
+    )]
+    pub rent_rewards: Account<'info, TokenAccount>,
+
+    #[account(seeds = [b"NFT_authority", nft_manager.key().as_ref()], bump)]
+    /// CHECK: This is a PDA used as authority
+    pub nft_authority: UncheckedAccount<'info>,
+
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
 }
 
 pub fn finish_order(ctx: Context<FinishOrder>) -> Result<()> {
@@ -174,3 +303,33 @@ pub fn finish_order(ctx: Context<FinishOrder>) -> Result<()> {
     Ok(())
 }
 
+#[derive(Accounts)]
+pub struct FinishOrder<'info> {
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+
+
+    #[account(
+        mut,
+        seeds = [b"room_order", room_order.nonce.to_le_bytes().as_ref()],
+        bump,
+        constraint = room_order.status == 2
+    )]
+    pub room_order: Account<'info, RoomOrder>,
+
+    #[account(mut,constraint = rewards_pool_info.key() == nft_manager.rewards_pool_info)]
+    pub rewards_pool_info: Account<'info, Rewards_pool_info>,
+
+    #[account(
+        mut,
+        associated_token::mint = nft_manager.rewards_mint,
+        associated_token::authority = room_order.payer,
+    )]
+    pub user_token_account: Account<'info, TokenAccount>, 
+
+    #[account(constraint = validator.key() == room_order.validator)]
+    pub validator: Signer<'info>,
+    ///todo
+    #[account(mut,constraint = user_stake.owner == room_order.payer,)]
+    pub user_stake: Account<'info, UserStake>,
+}

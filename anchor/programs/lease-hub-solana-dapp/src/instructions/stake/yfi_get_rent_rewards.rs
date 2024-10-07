@@ -45,6 +45,7 @@ pub fn earned(ctx: Context<Earned>) -> Result<()> {
     });
     Ok(())
 }
+
 #[derive(Accounts)]
 pub struct Earned<'info> {
     #[account(mut)]
@@ -58,6 +59,8 @@ pub struct Earned<'info> {
         associated_token::authority = user
     )]
     pub user_reward_account: Account<'info, TokenAccount>,
+    pub associated_token_program: AccountInfo<'info>,
+
     pub user: Signer<'info>,
 }
 
@@ -125,5 +128,50 @@ pub fn claim_reward_yfi(ctx: Context<ClaimRewardYfi>) -> Result<()> {
     Ok(())
 }
 
+
+#[derive(Accounts)]
+pub struct ClaimRewardYfi<'info> {
+    #[account(mut)]
+    pub nft_manager: Account<'info, NFTmanager>,
+
+    #[account(init_if_needed,
+        payer = user,
+        space = 8 + 8 + 8,
+        seeds = [b"user_stake", user.key().as_ref()],
+        constraint = user_stake.owner == user.key(),
+        bump,
+    )]
+    pub user_stake: Account<'info, UserStake>,
+    
+    #[account(mut,
+        associated_token::mint = nft_manager.rewards_mint,
+        associated_token::authority = nft_authority
+    )]
+    pub rent_rewards: Account<'info, TokenAccount>,
+
+    #[account(mut,constraint = rewards_pool_info.key() == nft_manager.rewards_pool_info)]
+    pub rewards_pool_info: Account<'info, Rewards_pool_info>,
+    
+    #[account(mut,
+        associated_token::mint = nft_manager.coin_mint,
+        associated_token::authority = user
+    )]
+    pub user_token_account: Account<'info, TokenAccount>,
+    
+    #[account(seeds = [b"NFT_authority", nft_manager.key().as_ref()], bump)  ]
+    /// CHECK: This is a PDA used as authority
+    pub nft_authority: AccountInfo<'info>,
+
+    #[account(mut,
+        associated_token::mint = nft_manager.rewards_mint,
+        associated_token::authority = user
+    )]
+    pub user_reward_account: Account<'info, TokenAccount>,
+
+    #[account(mut)] 
+    pub user: Signer<'info>,
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+}
 
 

@@ -9,7 +9,29 @@ pub fn create_stake_coin(ctx: Context<CreateStakeCoin>) -> Result<()> {
     Ok(())
 }   
 
-pub fn stake(ctx: Context<MintToken>,amount: u64) -> Result<()> {
+#[derive(Accounts)]
+pub struct CreateStakeCoin<'info> {
+    #[account(init, 
+        payer = authority,
+        mint::decimals = 9,
+        mint::authority = mint_authority.key(),
+    )]
+    pub mint: Account<'info, Mint>,
+
+    #[account(seeds = [b"stake_authority", mint.key().as_ref()], bump)]
+    /// CHECK: This is a PDA used as mint authority
+    pub mint_authority: UncheckedAccount<'info>,
+    
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    /// CHECK: This is not dangerous because we don't read or write from this account
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+    pub rent: Sysvar<'info, Rent>,
+}
+
+
+pub fn mint_token(ctx: Context<MintToken>,amount: u64) -> Result<()> {
     if ctx.accounts.owner.lamports() < amount {
         return Err(ErrorCode::InsufficientSol.into());
     }
@@ -29,7 +51,34 @@ pub fn stake(ctx: Context<MintToken>,amount: u64) -> Result<()> {
     Ok(())
 }
 
-pub fn unstake(ctx: Context<BurnToken>,amount: u64) -> Result<()> {
+#[derive(Accounts)]
+pub struct MintToken<'info> {
+    #[account(mut)]
+    pub mint: Account<'info, Mint>,
+
+    #[account(
+        mut,
+        associated_token::mint = mint,
+        associated_token::authority = owner
+    )]
+    pub token_account: Account<'info, TokenAccount>,
+
+    #[account(seeds = [b"mint_authority"], bump)]
+    /// CHECK: This is a PDA used as mint authority
+    pub mint_authority: UncheckedAccount<'info>,
+
+    #[account(mut)]
+    /// CHECK: This account is used to stake SOL 金库地址 pool
+    pub stake_account: UncheckedAccount<'info>,
+
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
+}
+
+pub fn burn_token(ctx: Context<BurnToken>,amount: u64) -> Result<()> {
     let cpi_accounts = Burn {
         mint: ctx.accounts.mint.to_account_info(),
         from: ctx.accounts.token_account.to_account_info(),
@@ -43,5 +92,31 @@ pub fn unstake(ctx: Context<BurnToken>,amount: u64) -> Result<()> {
     **ctx.accounts.owner.try_borrow_mut_lamports()? += amount;
 
     Ok(())
+}
+
+#[derive(Accounts)]
+pub struct BurnToken<'info> {
+    #[account(mut)]
+    pub mint: Account<'info, Mint>,
+
+    #[account(
+        mut,
+        associated_token::mint = mint,
+        associated_token::authority = owner
+    )]
+    pub token_account: Account<'info, TokenAccount>,
+
+    #[account(seeds = [b"stake_authority", mint.key().as_ref()], bump)]
+    /// CHECK: This is a PDA used as mint authority
+    pub mint_authority: UncheckedAccount<'info>,
+    #[account(mut)]
+    /// CHECK: This account is used to store staked SOL  金库合约
+    pub stake_account: UncheckedAccount<'info>,
+
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    pub token_program: Program<'info, Token>,
+    pub system_program: Program<'info, System>,
 }
 
