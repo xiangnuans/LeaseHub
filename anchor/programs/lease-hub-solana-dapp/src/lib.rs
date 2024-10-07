@@ -26,7 +26,7 @@ pub mod lease_hub_solana_dapp {
     use super::*;
     
     /// create_house_nft_and_coin
-    pub fn create_house_nft_and_coin(ctx: Context<CreateHouseNftAndCoin>, args: NFTargs) -> Result<()>{
+    pub fn create_house_nft_and_coin(ctx: Context<CreateHouseNftAndCoin>, args: NFTinfo_args) -> Result<()>{
         create_house_nft_and_coin(ctx, args)
     }
 
