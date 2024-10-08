@@ -60,15 +60,12 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-      
-      - name: Install pnpm
-        run: npm install -g pnpm
       - name: Add pnpm to PATH
         run: echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: pnpm ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.runner }} build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
