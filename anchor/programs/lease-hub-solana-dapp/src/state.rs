@@ -32,21 +32,38 @@ pub struct RoomOrder {
 
 #[account]
 pub struct NFTmanager {
+    //nft mint
     pub nft_mint: Pubkey,
+    //house coin mint
     pub coin_mint: Pubkey,
+    //rewards mint
     pub rewards_mint: Pubkey,
+    //nft authority control house coin and nft
     pub nft_authority: Pubkey,
+    //total supply of house coins
     pub total_coins: u64,
+    //house coins price(for trade with sol)
     pub coins_price: u64,
+    //rent price (paid by rewards coin)
     pub rent_price: u64,
+    // swap pool vault
     pub swap_coins: Pubkey,
+    // swap pool sols vault
     pub swap_sols: Pubkey,
+    // rentfees rewards(devide by house coin owner)
     pub rent_rewards: Pubkey,
+    // mint sign
     pub nft_minted: bool,
+    //rewards pool info for devide rewards
     pub rewards_pool_info: Pubkey,
+    //swap pool house coin for trade
     pub unlock_share_token: u64,
+    //swap pool sols for trade
     pub unlock_sol: u64,
+    //nonce for room order
     pub nonce: u64,
+    //bump
+    pub bump: u8,
 }
 
 
@@ -65,6 +82,7 @@ pub struct Rewards_pool_info {
     pub last_update_time: u64,
     pub reward_per_token_store: u64,
     pub reward_rate: u64,
+    pub bump: u8,
     
 }
 
