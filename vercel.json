@@ -1,8 +1,8 @@
 {
-  "builds": [
+  "routes": [
     {
-      "src": "apps/web/package.json",
-      "use": "@vercel/next"
+      "src": "/(.*)",
+      "dest": "apps/web/$1"
     }
   ]
 }
