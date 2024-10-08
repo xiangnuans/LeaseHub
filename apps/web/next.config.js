@@ -3,6 +3,7 @@ const nextConfig = {
   basePath: '/LeaseHub',
   assetPrefix: '/LeaseHub',
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
