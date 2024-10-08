@@ -1,31 +1,31 @@
-"use client";
-import React from "react";
-import { Img, Heading, Text, Input } from "@/components/";
-import SearchIcon from "@/assets/icons/rent/map-search.svg";
-import PlaceIcon from "@/assets/icons/rent/search-place.svg";
-import SelectImage from "@/assets/images/rent/select-place.svg";
-import PointIcon from "@/assets/icons/rent/seclect/point.svg";
-import SearchParkingIcon from "@/assets/icons/rent/seclect/parking.svg";
-import SearchWashingIcon from "@/assets/icons/rent/seclect/washing.svg";
-import SearchBathtubIcon from "@/assets/icons/rent/seclect/baththub.svg";
-import SolIcon from "@/assets/icons/travel-sol.svg";
-import ArrowDown from "@/assets/icons/rent/seclect/arrow-down.svg";
-import MapSizeIcon from "@/assets/icons/rent/map-rate.svg";
-import { useRouter } from "next/navigation";
+'use client';
+import React from 'react';
+import { Img, Heading, Text, Input } from '@/components/';
+import SearchIcon from '@/assets/icons/rent/map-search.svg';
+import PlaceIcon from '@/assets/icons/rent/search-place.svg';
+import SelectImage from '@/assets/images/rent/select-place.svg';
+import PointIcon from '@/assets/icons/rent/seclect/point.svg';
+import SearchParkingIcon from '@/assets/icons/rent/seclect/parking.svg';
+import SearchWashingIcon from '@/assets/icons/rent/seclect/washing.svg';
+import SearchBathtubIcon from '@/assets/icons/rent/seclect/baththub.svg';
+import SolIcon from '@/assets/icons/travel-sol.svg';
+import ArrowDown from '@/assets/icons/rent/seclect/arrow-down.svg';
+import MapSizeIcon from '@/assets/icons/rent/map-rate.svg';
+import { useRouter } from 'next/navigation';
 
 interface Props {
-  type: "investment" | "rent";
+  type: 'investment' | 'rent';
 }
 
 export default function Map({ type }: Props) {
   const router = useRouter();
 
   const handleSelectPlace = () => {
-    if (type === "investment") {
-      router.push("/investment/1");
+    if (type === 'investment') {
+      router.push('/investment/1');
     }
-    if (type === "rent") {
-      router.push("/rent/1");
+    if (type === 'rent') {
+      router.push('/rent/1');
     }
   };
   return (
@@ -33,7 +33,7 @@ export default function Map({ type }: Props) {
       <div
         className={`w-full flex-1 rounded-[20px] bg-cover bg-no-repeat lg:h-auto md:h-auto md:self-stretch`}
         style={{
-          backgroundImage: `url('/map.svg')`,
+          backgroundImage: `url('/LeaseHub/map.svg')`,
         }}
       >
         <div className="mt-7 flex flex-col items-start">
@@ -115,14 +115,14 @@ export default function Map({ type }: Props) {
                 <div className="flex flex-1 flex-col items-start">
                   <Heading
                     size="headings"
-                    as={"h6"}
+                    as={'h6'}
                     className=" text-[16px] font-semibold text-white-a700 lg:text-[13px]"
                   >
                     Center of excellence
                   </Heading>
                   <Heading
                     size="headings"
-                    as={"p"}
+                    as={'p'}
                     className=" text-[14px] font-semibold text-white-a700"
                   >
                     Residential hostel
