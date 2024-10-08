@@ -77,7 +77,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm || npx pnpm install
       - name: Add pnpm to PATH
         run: echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
       - name: Install dependencies
