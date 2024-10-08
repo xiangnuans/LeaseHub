@@ -1,11 +1,11 @@
-"use client";
-import * as React from "react";
-import { ReactNode } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import { siteConfig } from "@/config/site";
-import { WalletButton } from "@repo/wallet-provider";
+'use client';
+import * as React from 'react';
+import { ReactNode } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { siteConfig } from '@/config/site';
+import { WalletButton } from '@repo/wallet-provider';
 
 export default function UiLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -23,18 +23,18 @@ export default function UiLayout({ children }: { children: ReactNode }) {
               src="/logo.png"
             />
           </Link>
-          <ul className="flex flex-wrap gap-10">
+          <ul className="flex flex-wrap gap-10 relative z-10">
             {siteConfig.navItems.map(({ label, path }) => (
               <li key={path}>
                 <Link
                   className={`${
-                    path === "/"
+                    path === '/'
                       ? pathname === path // 首页只匹配完全等于 "/"
-                        ? "text-[#c5f250]"
-                        : "text-[#b8b8b8]"
+                        ? 'text-[#c5f250]'
+                        : 'text-[#b8b8b8]'
                       : pathname?.startsWith(path) // 其他页面使用 startsWith 进行匹配
-                        ? "text-[#c5f250]"
-                        : "text-[#b8b8b8]"
+                        ? 'text-[#c5f250]'
+                        : 'text-[#b8b8b8]'
                   } text-[20px] md:text-[17px] lg:text-[20px] xl:text-[24px] font-semibold font-['Poppins']`}
                   href={path}
                 >
