@@ -60,12 +60,8 @@ jobs:
              echo "Unable to determine package manager"
              exit 1
            fi
-      - name: Add pnpm to PATH
-        run: echo "${{ github.workspace }}/node_modules/.bin" >> $GITHUB_PATH
-      - name: Install dependencies
-        run: pnpm ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} build
+        run: pnpm build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
