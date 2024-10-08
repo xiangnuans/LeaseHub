@@ -20,7 +20,7 @@ export default function UiLayout({ children }: { children: ReactNode }) {
               width={186}
               height={50}
               alt="Logo"
-              src="/logo.png"
+              src="/LeaseHub/logo.png"
             />
           </Link>
           <ul className="flex flex-wrap gap-10 relative z-10">
