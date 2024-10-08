@@ -9,12 +9,9 @@ use anchor_spl::{
 
 pub fn initialize(ctx: Context<Initialize>, reward_per_slot: u64) -> Result<()> {
     let pool = &mut ctx.accounts.pool;
+    pool.bump = ctx.bumps.pool;  // to do 
     pool.reward_mint = ctx.accounts.reward_mint.key();
-    pool.staking_mint = ctx.accounts.staking_mint.key();
     pool.reward_authority = ctx.accounts.reward_authority.key();
-    pool.pool_authority = ctx.accounts.pool_authority.key();
-    pool.pool_staking_account = ctx.accounts.pool_staking_account.key();
-    pool.total_staked = 0;
     pool.reward_per_slot = reward_per_slot;
     pool.last_update_slot = Clock::get()?.slot;
     pool.acc_reward_per_share = 0;
@@ -24,39 +21,26 @@ pub fn initialize(ctx: Context<Initialize>, reward_per_slot: u64) -> Result<()> 
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
-    #[account(init, payer = user, space = 8 + 32 + 32 + 32 + 8 + 8 + 8 + 16 + 1)]
+    //pool account
+    #[account(init, payer = user, space = 8 + 32 + 32 + 32 + 8 + 8 + 8 + 16 + 1,seeds=[b"pool_authority"],bump)]
     pub pool: Account<'info, Pool>,
+
+    //rewards mint
     #[account(mut, mint::authority = reward_authority)]
     pub reward_mint: Account<'info, Mint>,  //奖励代币的mint
-    #[account(mut, mint::authority = stake_authority)]
-    pub staking_mint: Account<'info, Mint>, //
-
-    #[account(seeds = [b"pool_authority", pool.key().as_ref()], bump)]
-    /// CHECK: This is a PDA used as mint authority
-    pub pool_authority: UncheckedAccount<'info>,
-    #[account(init, 
-        payer = user,
-        associated_token::mint = staking_mint,
-        associated_token::authority = pool_authority
-        
-    )]
-    pub pool_staking_account: Account<'info, TokenAccount>,
-
+    
+    //pda of program reward key
     #[account(
         seeds = [b"reward_authority", pool.key().as_ref()],
         bump,
     )]
     pub reward_authority: UncheckedAccount<'info>, //奖励代币的authority 是程序的pda账户
-    #[account(
-        seeds = [b"stake_authority", pool.key().as_ref()],
-        bump,
-    )]
-    pub stake_authority: UncheckedAccount<'info>, //奖励代币的authority 是程序的pda账户
+
     #[account(mut)]
     pub user: Signer<'info>,
-    pub associated_token_program: Program<'info, AssociatedToken>,
     pub token_program:AccountInfo<'info>,
     pub system_program: Program<'info, System>,
+    pub rent: Sysvar<'info, Rent>,
 }
 
 
@@ -72,15 +56,7 @@ pub fn stake(ctx: Context<Stake>, amount: u64) -> Result<()> {
     // Update pool rewards
     update_pool(pool)?; 
     
-    // Transfer tokens to stake
-    let cpi_accounts = Transfer {
-        from: ctx.accounts.user_staking_account.to_account_info(),
-        to: ctx.accounts.pool_staking_account.to_account_info(),
-        authority: ctx.accounts.user_authority.to_account_info(),
-    };
-    let cpi_program = ctx.accounts.token_program.to_account_info();
-    let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
-    token::transfer(cpi_ctx, amount)?;
+    
 
     // Update user rewards
     user.reward_debt = user.reward_debt.wrapping_add(
@@ -91,9 +67,12 @@ pub fn stake(ctx: Context<Stake>, amount: u64) -> Result<()> {
             .unwrap() as u64
     );
 
+    **ctx.accounts.user_authority.to_account_info().try_borrow_mut_lamports()? -= amount;
+    **ctx.accounts.pool.to_account_info().try_borrow_mut_lamports()? += amount;
+
     // Update user stake
     user.amount = user.amount.checked_add(amount).unwrap();
-    pool.total_staked = pool.total_staked.checked_add(amount).unwrap();
+    // pool.total_staked = pool.total_staked.checked_add(amount).unwrap();
 
     Ok(())
 }
@@ -110,20 +89,12 @@ pub struct Stake<'info> {
         bump,
     )]
     pub user: Account<'info, User>,
-    #[account(mut, 
-        constraint = user_staking_account.owner == user_authority.key(),
-        constraint = user_staking_account.mint == pool.staking_mint
-    )]
-    pub user_staking_account: Account<'info, TokenAccount>,
-    #[account(mut, 
-        constraint = pool_staking_account.owner == pool.key(),
-        constraint = pool_staking_account.mint == pool.staking_mint
-    )]
-    pub pool_staking_account: Account<'info, TokenAccount>,
+    
     #[account(mut)]
     pub user_authority: Signer<'info>,
     pub token_program: Program<'info, Token>,
     pub system_program: Program<'info, System>,
+    pub rent: Sysvar<'info, Rent>,
 }
 
 
@@ -149,20 +120,12 @@ pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
         .unwrap();
 
     // Transfer staked tokens back to user
-    let pool_seeds = &[pool.pool_authority.as_ref()];
+    // let pool_seeds = &[pool.pool_authority.as_ref()];
     
-    let pool_signer = &[&pool_seeds[..]];
+    // let pool_signer = &[&pool_seeds[..]];
 
     let reward_seeds = &[pool.reward_authority.as_ref()];
     let reward_signer = &[&reward_seeds[..]];
-    let cpi_accounts = Transfer {
-        from: ctx.accounts.pool_staking_account.to_account_info(),
-        to: ctx.accounts.user_staking_account.to_account_info(),
-        authority: ctx.accounts.stake_authority.to_account_info(),
-    };
-    let cpi_program = ctx.accounts.token_program.to_account_info();
-    let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, pool_signer);
-    token::transfer(cpi_ctx, amount)?;
 
     // Transfer rewards to user
     let cpi_accounts = MintTo {
@@ -182,8 +145,10 @@ pub fn unstake(ctx: Context<Unstake>, amount: u64) -> Result<()> {
         .checked_div(1e9 as u128)
         .unwrap()) as u64;
 
+    **ctx.accounts.pool.to_account_info().try_borrow_mut_lamports()? -= amount;
+    **ctx.accounts.user_authority.to_account_info().try_borrow_mut_lamports()? += amount;
     // Update pool state
-    pool.total_staked = pool.total_staked.checked_sub(amount).unwrap();
+    // pool.total_staked = pool.total_staked.checked_sub(amount).unwrap();
 
     Ok(())
 }
@@ -194,14 +159,7 @@ pub struct Unstake<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub user: Account<'info, User>,
-    #[account(mut, constraint = user_staking_account.owner == user_authority.key(),
-                    constraint = user_staking_account.mint == pool.staking_mint
-    )]   
-    pub user_staking_account: Account<'info, TokenAccount>,
-    #[account(mut, constraint = pool_staking_account.owner == pool.key(),
-                    constraint = pool_staking_account.mint == pool.staking_mint
-    )]
-    pub pool_staking_account: Account<'info, TokenAccount>,
+    // forward init
     #[account(mut, constraint = user_reward_account.owner == user_authority.key(),
                     constraint = user_reward_account.mint == reward_mint.key()
     )]
@@ -212,51 +170,48 @@ pub struct Unstake<'info> {
 
     pub user_authority: Signer<'info>,
     /// CHECK: This is the PDA that signs for the pool
-    #[account(
-        seeds = [b"stake_authority", pool.key().as_ref()],
-        bump,
-    )]
-    pub stake_authority: UncheckedAccount<'info>,
+    
     #[account(
         seeds = [b"reward_authority", pool.key().as_ref()],
         bump,
     )]
     pub reward_authority: UncheckedAccount<'info>,
     pub token_program: Program<'info, Token>,
+    pub associated_program: Program<'info, AssociatedToken>,
 }
 
 
 
-pub fn pending_reward(ctx: Context<PendingReward>) -> Result<()> {
-    let pool = &ctx.accounts.pool;
-    let user = &ctx.accounts.user;
+// pub fn pending_reward(ctx: Context<PendingReward>) -> Result<()> {
+//     let pool = &ctx.accounts.pool;
+//     let user = &ctx.accounts.user;
 
-    let rewards = ((user.amount as u128)
-        .checked_mul(pool.acc_reward_per_share)
-        .unwrap()
-        .checked_div(1e9 as u128)
-        .unwrap() as u64)
-        .checked_sub(user.reward_debt)
-        .unwrap();
+//     let rewards = ((user.amount as u128)
+//         .checked_mul(pool.acc_reward_per_share)
+//         .unwrap()
+//         .checked_div(1e9 as u128)
+//         .unwrap() as u64)
+//         .checked_sub(user.reward_debt)
+//         .unwrap();
         
-    emit!(Rewardmasterchef {
-        user: user.key(),
-        amount: rewards,
-    });
-    Ok(())
-}
-#[event]
-pub struct Rewardmasterchef {
-    #[index]
-    pub user: Pubkey,
-    pub amount: u64,
-}
+//     emit!(Rewardmasterchef {
+//         user: user.key(),
+//         amount: rewards,
+//     });
+//     Ok(())
+// }
+// #[event]
+// pub struct Rewardmasterchef {
+//     #[index]
+//     pub user: Pubkey,
+//     pub amount: u64,
+// }
 
-#[derive(Accounts)]
-pub struct PendingReward<'info> {
-    pub pool: Account<'info, Pool>,
-    pub user: Account<'info, User>,
-}
+// #[derive(Accounts)]
+// pub struct PendingReward<'info> {
+//     pub pool: Account<'info, Pool>,
+//     pub user: Account<'info, User>,
+// }
 
 
 pub fn claim_reward_masterchef(ctx: Context<ClaimRewardMasterchef>) -> Result<()> {
@@ -335,9 +290,9 @@ fn update_pool(pool: &mut Account<Pool>) -> Result<()> {
     if current_slot <= pool.last_update_slot {
         return Ok(());
     }
-
+    let total_staked = pool.to_account_info().lamports();
     // 只有在总质押量不为零时才进行更新
-    if pool.total_staked != 0 {
+    if total_staked != 0 {
         // 计算经过的时间槽数
         let slots_elapsed = current_slot - pool.last_update_slot;
         
@@ -352,7 +307,7 @@ fn update_pool(pool: &mut Account<Pool>) -> Result<()> {
                 reward
                     .checked_mul(1e9 as u128)  // 乘以1e9以增加精度
                     .unwrap()
-                    .checked_div(pool.total_staked as u128)  // 除以总质押量
+                    .checked_div(total_staked as u128)  // 除以总质押量
                     .unwrap()
             )
             .unwrap();

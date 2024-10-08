@@ -72,11 +72,8 @@ pub struct Rewards_pool_info {
 #[account]
 pub struct Pool {
     pub reward_mint: Pubkey,
-    pub staking_mint: Pubkey,
+    pub bump:u8,
     pub reward_authority: Pubkey,
-    pub pool_authority: Pubkey,
-    pub pool_staking_account: Pubkey,
-    pub total_staked: u64,
     pub reward_per_slot: u64,
     pub last_update_slot: u64,
     pub acc_reward_per_share: u128,

@@ -14,7 +14,6 @@ use instructions::stake::{
     create_house_nft_and_coin::*,
     create_order::*,
     create_rewards_coin::*,
-    create_stake_coins::*,
     masterchef::*,
     yfi_get_rent_rewards::*,    
 };
@@ -72,18 +71,6 @@ pub mod lease_hub_solana_dapp {
     
     ///create rewards coins
 
-    ///create stake coins
-    pub fn create_stake_coin(ctx: Context<CreateStakeCoin>) -> Result<()> {
-        create_stake_coin(ctx)
-    }
-
-    pub fn stakecoin(ctx: Context<MintToken>,amount: u64) -> Result<()> {
-        mint_token(ctx,amount)
-    }
-
-    pub fn unstakecoin(ctx: Context<BurnToken>,amount: u64) -> Result<()> {
-        burn_token(ctx,amount)
-    }
 
     ///masterchef
     pub fn initialize(ctx: Context<Initialize>, reward_per_slot: u64) -> Result<()> {
@@ -98,9 +85,9 @@ pub mod lease_hub_solana_dapp {
         unstake(ctx, amount)
     }
 
-    pub fn pending_reward(ctx: Context<PendingReward>) -> Result<()> {
-        pending_reward(ctx)
-    }   
+    // pub fn pending_reward(ctx: Context<PendingReward>) -> Result<()> {
+    //     pending_reward(ctx)
+    // }   
     pub fn claim_reward_masterchef(ctx: Context<ClaimRewardMasterchef>) -> Result<()> {
         claim_reward_masterchef(ctx)
     }   

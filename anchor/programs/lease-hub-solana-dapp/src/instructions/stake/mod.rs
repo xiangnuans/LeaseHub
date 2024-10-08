@@ -4,8 +4,6 @@ pub mod create_order;
 pub mod create_rewards_coin;
 // pub use create_rewards_coin::*;
 
-pub mod create_stake_coins;
-// pub use create_stake_coins::*;
 
 pub mod masterchef;
 pub use masterchef::*;
