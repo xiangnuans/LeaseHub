@@ -12,7 +12,7 @@ lease_hub_solana_dapp = "4P76KAJyhNTBvV1iTFv9hAnJ8vmcUHWQaBDoDLAGLYjX"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "https://api.devnet.solana.com"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

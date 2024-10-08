@@ -18,13 +18,16 @@ use crate::utils::{
     create_metadata_accounts_v3, CreateMetadataAccountsV3cpi, Metadata,
 };
 
-pub fn init_house_manager(ctx:Context<InitHouseManager>,total_coins: u64,coins_price: u64) -> Result<()>{
+pub fn init_house_manager(ctx:Context<InitHouseManager>,total_coins: u64,coins_price: u64,rent_price: u64) -> Result<()>{
     let nft_manager = &mut ctx.accounts.nft_manager;
+    // nft_manager.bump = ctx.bumps.nft_manager;
     nft_manager.nft_mint = ctx.accounts.nft_mint.key() ;
     nft_manager.coin_mint = ctx.accounts.coin_mint.key();
+    nft_manager.rewards_mint = ctx.accounts.rewards_mint.key();
     nft_manager.nft_authority = ctx.accounts.nft_authority.key();
     nft_manager.total_coins = total_coins;
     nft_manager.coins_price = coins_price;
+    nft_manager.rent_price = rent_price;
     nft_manager.swap_coins = ctx.accounts.swap_coins.key();
     nft_manager.swap_sols = ctx.accounts.swap_sols.key(); 
     nft_manager.nft_minted = true;
@@ -49,7 +52,7 @@ pub struct InitHouseManager<'info>{
         mint::authority = nft_authority.key(),
     )]
     pub coin_mint: Account<'info, Mint>,
-
+    pub rewards_mint: AccountInfo<'info>,
     #[account(seeds = [b"NFT_authority", nft_manager.key().as_ref()], bump)]
 
     pub nft_authority: UncheckedAccount<'info>,
@@ -58,8 +61,9 @@ pub struct InitHouseManager<'info>{
         seeds = [b"rewards_pool_info", nft_authority.key().as_ref()],
         bump)]
     pub rewards_pool_info: Box<Account<'info, Rewards_pool_info>>,
-
-    #[account(mut, associated_token::mint = nft_manager.coin_mint, associated_token::authority = nft_authority.key())]
+    // pda's house coin ata
+    #[account(mut, associated_token::mint = nft_manager.coin_mint,
+                   associated_token::authority = nft_authority.key())]
     pub swap_coins: Account<'info, TokenAccount>,
 
     #[account(seeds = [b"swap_sols", nft_authority.key().as_ref()], bump)]
@@ -67,9 +71,7 @@ pub struct InitHouseManager<'info>{
 
     #[account(mut)]
     pub authority: Signer<'info>,
-    pub token_metadata_program: UncheckedAccount<'info>,
     pub associated_token_program: AccountInfo<'info>,
-
     pub token_program: AccountInfo<'info>,
     pub system_program: AccountInfo<'info>,
     pub rent: Sysvar<'info, Rent>,
@@ -88,7 +90,7 @@ pub fn create_house_nft_and_coin(ctx: Context<CreateHouseNftAndCoin>, args: NFTi
     };
     let cpi_program = ctx.accounts.token_program.to_account_info();
     let binding = ctx.accounts.nft_mint.key();
-    let seeds = &[b"NFT_authority", binding.as_ref()];
+    let seeds = &[b"NFT_authority", binding.as_ref(),&[nft_manager.bump]];
     let signer = &[&seeds[..]];
     let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
     mint_to(cpi_ctx, 1)?;
@@ -138,7 +140,7 @@ pub fn create_house_nft_and_coin(ctx: Context<CreateHouseNftAndCoin>, args: NFTi
     };
     let cpi_program = ctx.accounts.token_metadata_program.to_account_info();
     let binding = ctx.accounts.nft_mint.key();
-    let seeds = &[b"NFT_authority", binding.as_ref()];
+    let seeds = &[b"NFT_authority", binding.as_ref(),&[nft_manager.bump]];
     let signer = &[&seeds[..]];
     let cpi_ctx = CpiContext::new_with_signer(cpi_program, cpi_accounts, signer);
     sign_metadata(cpi_ctx)?;
@@ -150,13 +152,13 @@ pub fn create_house_nft_and_coin(ctx: Context<CreateHouseNftAndCoin>, args: NFTi
 #[instruction(args:NFTinfo_args)]
 pub struct CreateHouseNftAndCoin<'info> {
     
-    #[account(init, payer = authority, space = 8 + 32 + 32 + 32 + 8 + 8 + 32 + 32)]
+    #[account(init, payer = authority, space = 8+ nft_manager::INIT_SPACE)]
     pub nft_manager: Box<Account<'info, NFTmanager>>,
 
-    #[account(init, 
-        payer = authority,
+    #[account(
         mint::decimals = 0,
         mint::authority = nft_authority.key(),
+        constraint = nft_mint.key() == nft_manager.nft_mint
     )]
     pub nft_mint: Account<'info, Mint>,
 
@@ -164,7 +166,7 @@ pub struct CreateHouseNftAndCoin<'info> {
                 init_if_needed,
                 payer = authority,
                 associated_token::mint = nft_mint,
-                associated_token::authority = nft_manager
+                associated_token::authority = nft_authority
     )]
     pub nftholder: Box<Account<'info, TokenAccount>>,
 
@@ -174,15 +176,13 @@ pub struct CreateHouseNftAndCoin<'info> {
     pub rewards_pool_info: Box<Account<'info, Rewards_pool_info>>,
 
     
-    #[account(seeds = [b"NFT_authority", nft_manager.key().as_ref()], bump)]
+    #[account(seeds = [b"NFT_authority", nft_manager.key().as_ref()], bump = nft_manager.bump)]
     /// CHECK: This is a PDA used as mint authority
     pub nft_authority: UncheckedAccount<'info>,
 
     #[account(mut)]
     pub authority: Signer<'info>,
     pub metadata: UncheckedAccount<'info>,
-
-    
     /// CHECK: This is not dangerous because we don't read or write from this account
     pub token_metadata_program: UncheckedAccount<'info>,
     pub associated_token_program: AccountInfo<'info>,
