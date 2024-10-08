@@ -85,7 +85,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./apps/web/.next/static
+          path: ./apps/web/.next
 
   # Deployment job
   deploy:
