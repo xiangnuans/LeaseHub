@@ -1,41 +1,47 @@
-"use client";
-import { Button, Text, Heading, Img } from "@/components/index";
-import ArrowImg from "@/assets/images/home-arrow.svg";
-import HomeImg from "@/assets/images/home.svg";
-import StakeIcon from "@/assets/icons/stake.svg";
-import RentIcon from "@/assets/icons/rent.svg";
-import MiniIcon from "@/assets/icons/mini-house.svg";
-import InvestIcon from "@/assets/icons/investment.svg";
+'use client';
+import { Button, Text, Heading, Img } from '@/components/index';
+import ArrowImg from '@/assets/images/home-arrow.svg';
+import HomeImg from '@/assets/images/home.svg';
+import StakeIcon from '@/assets/icons/stake.svg';
+import RentIcon from '@/assets/icons/rent.svg';
+import MiniIcon from '@/assets/icons/mini-house.svg';
+import InvestIcon from '@/assets/icons/investment.svg';
+import { useRouter } from 'next/navigation';
 
 const data = [
   {
-    title: "Stake",
-    description: "Pledge your property for income",
+    title: 'Stake',
+    description: 'Pledge your property for income',
     icon: StakeIcon,
-    link: "/stake",
+    link: '/stake',
   },
   {
-    title: "Rent",
-    description: "Blockchain short-term rental",
+    title: 'Rent',
+    description: 'Blockchain short-term rental',
     icon: RentIcon,
-    link: "/rent",
+    link: '/rent',
     isHighlighted: true,
   },
   {
-    title: "Mint House",
-    description: "Upload houses to earn income",
+    title: 'Mint House',
+    description: 'Upload houses to earn income',
     icon: MiniIcon,
-    link: "/mini-house",
+    link: '/mini-house',
   },
   {
-    title: "Investment",
-    description: "Invest in blockchain property",
+    title: 'Investment',
+    description: 'Invest in blockchain property',
     icon: InvestIcon,
-    link: "/investment",
+    link: '/investment',
   },
 ];
 
 export default function View() {
+  const router = useRouter();
+
+  const handleHref = (d: { title: string; link: string }) => {
+    router.push(d.link);
+  };
   return (
     <>
       <div className="self-stretch">
@@ -108,6 +114,7 @@ export default function View() {
           <div
             key={index}
             className={`flex flex-col items-center justify-center w-[24%] md:w-full gap-7 p-[38px] sm:p-4 bg-gray-900_02 rounded-[20px]`}
+            onClick={() => handleHref(d)}
           >
             <div className="flex rounded-md bg-lime-400_23 p-3">
               <Img
