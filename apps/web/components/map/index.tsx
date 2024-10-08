@@ -103,7 +103,7 @@ export default function Map({ type }: Props) {
             <div className="flex w-[66%] flex-col items-end self-center md:w-full">
               <div
                 onClick={handleSelectPlace}
-                className="flex w-[80%] items-center justify-center gap-3.5 rounded-[20px] bg-black-900 p-4 shadow-sm lg:w-full md:w-full"
+                className="flex w-[80%] items-center justify-center gap-3.5 rounded-[20px] bg-black-900 p-4 shadow-sm lg:w-full md:w-full cursor-pointer"
               >
                 <Img
                   src={SelectImage}
