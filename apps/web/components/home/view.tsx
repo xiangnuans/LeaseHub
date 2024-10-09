@@ -74,9 +74,11 @@ export default function View() {
               >
                 <span className="text-white-a700">
                   <>
-                    Unlocaking Commerical <br />
+                    Stake to Travel <br />
+                    Trade in Travel <br />
+                    Investment in Travel
                   </>
-                  <span className="text-lime-400">Your real Estate</span>
+                  {/* <span className="text-lime-400">Your real Profit</span> */}
                 </span>
               </Heading>
             </div>
@@ -85,9 +87,9 @@ export default function View() {
                 className="w-full font-rubik text-[16px] font-normal leading-[31px] text-gray-400 lg:text-[13px] mb-8"
                 as="p"
               >
-                Robinland provides fixed passive income to retail investors by
-                tokenizing institutional-grade commercial real estate in a legal
-                and decentralized fashion.
+                LeaseHub is an innovative Solana blockchain project that
+                reimagines real estate through staking rewards and property
+                tokenization.
               </Text>
               <Button
                 size="md"
