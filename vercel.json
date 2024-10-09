@@ -4,5 +4,12 @@
       "src": "/(.*)",
       "dest": "apps/web/$1"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/LeaseHub",
+      "permanent": true
+    }
   ]
 }
