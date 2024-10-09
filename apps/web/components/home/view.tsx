@@ -50,13 +50,11 @@ export default function View() {
             <div className="flex flex-col">
               <div className="flex items-start self-stretch md:flex-col">
                 <Heading
-                  size="headinglg"
+                  size="headingmd"
                   as="h1"
-                  className="mt-9 text-[24px] font-bold text-lime-400  lg:text-[20px]"
+                  className="mt-9 text-[16px] font-bold text-white-a700  lg:text-[20px]"
                 >
-                  <span className="text-lime-400">
-                    Earn Fixed Income with Blockchain
-                  </span>
+                  <span>Earn staking rewards on the blockchain</span>
                 </Heading>
                 <Img
                   width={464}
@@ -70,9 +68,9 @@ export default function View() {
               <Heading
                 size="heading4xl"
                 as="h2"
-                className="flex items-start relative mt-[-130px] text-[64px] font-extrabold leading-[96px] text-white-a700 lg:text-[48px] md:text-[48px]"
+                className="flex items-start relative mt-[-130px] text-[64px] font-extrabold leading-[96px] lg:text-[48px] md:text-[48px]"
               >
-                <span className="text-white-a700">
+                <span className="text-lime-400">
                   <>
                     Stake to Travel <br />
                     Trade in Travel <br />
